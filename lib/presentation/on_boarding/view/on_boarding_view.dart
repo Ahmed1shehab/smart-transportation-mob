@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:smart_transportation/domain/models.dart';
+import 'package:smart_transportation/domain/model/models.dart';
 import 'package:smart_transportation/presentation/on_boarding/viewmodel/onboarding_viewmodel.dart';
 import 'package:smart_transportation/presentation/resources/asset_manager.dart';
 import 'package:smart_transportation/presentation/resources/color_manager.dart';

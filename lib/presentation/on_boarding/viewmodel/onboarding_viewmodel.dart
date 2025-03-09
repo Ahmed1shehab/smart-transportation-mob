@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:smart_transportation/domain/models.dart';
+import 'package:smart_transportation/domain/model/models.dart';
 import 'package:smart_transportation/presentation/base/baseviewmodel.dart';
 import 'package:smart_transportation/presentation/resources/asset_manager.dart';
 import 'package:smart_transportation/presentation/resources/strings_manager.dart';

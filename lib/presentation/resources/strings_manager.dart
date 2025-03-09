@@ -15,5 +15,20 @@ class AppStrings {
   static const String skip = "Skip";
   static const String next = "Next";
   static const String finish = "Finish";
+  static const String ok = "OK";
+  static const String loading = "Loading";
+  static const String tryAgain = "Try Again";
+  static const String success = "Success";
+  static const String welcomeBack = "Welcome Back!";
+  static const String loginToAccount = " Log in to your account";
+  static const String emailOrPhone = "E-mail or Phone Number:";
+  static const String incorrectEmail = " Incorrect Email/Phone";
+  static const String password = "Password";
+  static const String incorrectPassword = " Incorrect Password";
+  static const String forgetPassword = "Forget Password ?";
 
+  static const String login = "Login";
+  static const String registerNow = "Register Now!";
+  static const String newUser = "New User?";
+  static const String orContinueWith = "- Or Continue With -";
 }

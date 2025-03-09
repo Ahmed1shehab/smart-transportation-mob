@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:smart_transportation/app/di.dart';
+import 'package:smart_transportation/presentation/auth/login/view/login_view.dart';
+import 'package:smart_transportation/presentation/auth/register/register_view.dart';
+import 'package:smart_transportation/presentation/dashboard/dashboard_view.dart';
 import 'package:smart_transportation/presentation/resources/strings_manager.dart';
 import 'package:smart_transportation/presentation/splash/splash_view.dart';
-
-import '../login/login_view.dart';
 import '../on_boarding/view/on_boarding_view.dart';
 
 class Routes{
   static const String splashRoute ='/';
   static const String onBoarding ='/onBoarding';
   static const String login ='/login';
-
+  static const String register ='/register';
+  static const String mainRoute = "/main";
 }
 class RouteGenerator{
   static Route<dynamic> getRoute(RouteSettings settings){
@@ -18,8 +21,15 @@ class RouteGenerator{
         return MaterialPageRoute(builder: (_) => const SplashView());
       case Routes.onBoarding:
         return MaterialPageRoute(builder: (_) => const OnboardingView());
+
       case Routes.login:
+        initLoginModule();
         return MaterialPageRoute(builder: (_) => const LoginView());
+      case Routes.register:
+        return MaterialPageRoute(builder: (_) => const RegisterView());
+      case Routes.mainRoute:
+        return MaterialPageRoute(builder: (_) => const DashboardView());
+
       default:
         return unDefinedRoute();
   }
