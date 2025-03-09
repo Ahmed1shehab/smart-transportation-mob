@@ -1,0 +1,15 @@
+[33m9be8b61[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/ahmed_shehab[m[33m, [m[1;32mahmed_shehab[m[33m)[m HEAD@{0}: pull origin ahmed_shehab --rebase (start): checkout 9be8b61e0ac23e7ec22414770cf64f52675271b3
+[33m4a13368[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{1}: commit: Smart transportation (Member&Organizer)
+[33mfdbf3b7[m HEAD@{2}: commit: Smart transportation (Member&Organizer)
+[33m4c7415d[m[33m ([m[1;31morigin/master[m[33m)[m HEAD@{3}: checkout: moving from ahmed_shehab to master
+[33m9be8b61[m[33m ([m[1;36mHEAD[m[33m, [m[1;31morigin/ahmed_shehab[m[33m, [m[1;32mahmed_shehab[m[33m)[m HEAD@{4}: commit: Initial empty commit
+[33mc3379dd[m[33m ([m[1;31morigin/rawan[m[33m, [m[1;32mrawan[m[33m)[m HEAD@{5}: checkout: moving from rawan to ahmed_shehab
+[33mc3379dd[m[33m ([m[1;31morigin/rawan[m[33m, [m[1;32mrawan[m[33m)[m HEAD@{6}: commit: Initial empty commit
+[33m4c7415d[m[33m ([m[1;31morigin/master[m[33m)[m HEAD@{7}: checkout: moving from mona to rawan
+[33mba1ed02[m[33m ([m[1;31morigin/mona[m[33m, [m[1;32mmona[m[33m)[m HEAD@{8}: commit: Initial empty commit
+[33m4c7415d[m[33m ([m[1;31morigin/master[m[33m)[m HEAD@{9}: checkout: moving from ahmed_ismail to mona
+[33mba6ad20[m[33m ([m[1;31morigin/ahmed_ismail[m[33m, [m[1;32mahmed_ismail[m[33m)[m HEAD@{10}: commit: Initial empty commit
+[33m4c7415d[m[33m ([m[1;31morigin/master[m[33m)[m HEAD@{11}: checkout: moving from mona to ahmed_ismail
+[33m4c7415d[m[33m ([m[1;31morigin/master[m[33m)[m HEAD@{12}: checkout: moving from rawan to mona
+[33m4c7415d[m[33m ([m[1;31morigin/master[m[33m)[m HEAD@{13}: checkout: moving from master to rawan
+[33m4c7415d[m[33m ([m[1;31morigin/master[m[33m)[m HEAD@{14}: commit (initial): Smart transportation (Member&Organizer)
