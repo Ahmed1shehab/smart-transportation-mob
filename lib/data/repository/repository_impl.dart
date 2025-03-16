@@ -1,13 +1,10 @@
-import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
-import 'package:smart_transportation/app/constants.dart';
+import 'package:smart_transportation/app/app_prefs.dart';
 import 'package:smart_transportation/data/data_source/remote_data_source.dart';
 import 'package:smart_transportation/data/mapper/mapper.dart';
 import 'package:smart_transportation/data/network/error_handler.dart';
 import 'package:smart_transportation/data/network/failure.dart';
 import 'package:smart_transportation/data/network/network_info.dart';
-import 'package:http/http.dart' as http;
 import 'package:smart_transportation/data/network/requests.dart';
 import 'package:smart_transportation/data/response/response.dart';
 import 'package:smart_transportation/domain/model/models.dart';
@@ -16,46 +13,52 @@ import 'package:smart_transportation/domain/repository/repository.dart';
 class RepositoryImpl implements Repository {
   final RemoteDataSource _remoteDataSource;
   final NetworkInfo _networkInfo;
+  final AppPreferences _appPreferences;
 
-  RepositoryImpl(this._remoteDataSource, this._networkInfo);
-  final String baseUrl = Constants.baseUrl;
+  RepositoryImpl(this._remoteDataSource, this._networkInfo, this._appPreferences);
 
   @override
   Future<Either<Failure, AuthenticationSignIn>> login(LoginRequest loginRequest) async {
     if (await _networkInfo.isConnected) {
       try {
-        final response = await http.post(
-          Uri.parse('$baseUrl/signin'),
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode({
-            'identifier': loginRequest.identifier,
-            'password': loginRequest.password,
-          }),
-        );
+        // Use AppServiceClient to make the login request
+        final response = await _remoteDataSource.login(loginRequest);
 
-        if (response.statusCode == 201) {
-          // Parse the response body
-          print("success");
-          final data = jsonDecode(response.body);
-          final authenticationSignInResponse = AuthenticationSignInResponse.fromJson(data);
-
-          return authenticationSignInResponse.toDomain();
+        // Save the access token
+        if (response.data?.accessToken != null) {
+          await _appPreferences.saveAccessToken(response.data!.accessToken!);
+          print("Token is saved successfully");
         } else {
-          // Handle errors
-          print("error1: ${response.statusCode}");
-          print("Error Response: ${response.body}");
-          throw Exception('Failed to sign in: ${response.statusCode}');
+          print("Access Token is null");
         }
+
+        // Convert the response to a domain model
+        return response.toDomain();
       } catch (error) {
-        print("error2");
+        print("Exception caught during login: $error");
         return Left(ErrorHandler.handle(error).failure);
       }
     } else {
-      print("3");
-      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
 
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
 
-// Add other methods as needed
+  @override
+  Future<Either<Failure, Organizer>> createOrganization(CreateOrganizerRequest createOrganizationRequest) async{
+    if (await _networkInfo.isConnected) {
+      try {
+        // Use AppServiceClient to make the createOrganizer request
+        final response = await _remoteDataSource.createOrganizer(createOrganizationRequest);
+        // Convert the response to a domain model
+        return response.toDomain();
+      } catch (error) {
+        print("Exception caught during creating Organizer: $error");
+        return Left(ErrorHandler.handle(error).failure);
+      }
+    } else {
+
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
+    }
+  }
 }

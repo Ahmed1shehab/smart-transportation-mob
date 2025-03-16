@@ -5,6 +5,8 @@ const String prefKeyLang = "PREFS_KEY_LANG";
 const String prefKeyOnBoardingScreenViewed =
     "PREFS_KEY_ONBOARDING_SCREEN_VIEWED";
 const String prefKeyIsUserLoggedIn = "PREFS_KEY_IS_USER_LOGGED_IN";
+const String _keyAccessToken = 'access_token';
+const String _keyOnBoardingViewed = 'onboarding_viewed';
 
 class AppPreferences {
   final SharedPreferences _sharedPreferences;
@@ -21,23 +23,49 @@ class AppPreferences {
     }
   }
 
-//   //onBoarding
-//   Future<void> setOnBoardingScreenViewed() async {
-//     _sharedPreferences.setBool(prefKeyOnBoardingScreenViewed, true);
-//   }
+  //Token
+  Future<void> saveAccessToken(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_keyAccessToken, token);
+  }
+
+  Future<String?> getAccessToken() async {
+    return _sharedPreferences.getString(_keyAccessToken);
+  }
+
+  Future<void> deleteAccessToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_keyAccessToken);
+  }
+
+  //onBoarding
+  Future<void> setOnBoardingScreenViewed() async {
+    _sharedPreferences.setBool(prefKeyOnBoardingScreenViewed, true);
+  }
+
 //
-// //
-//   Future<bool> isOnBoardingScreenViewed() async {
-//     return _sharedPreferences.getBool(prefKeyOnBoardingScreenViewed) ?? false;
-//   }
+  Future<bool> isOnBoardingScreenViewed() async {
+    return _sharedPreferences.getBool(prefKeyOnBoardingScreenViewed) ?? false;
+  }
+
+  //login
+  Future<void> setUserLoggedIn() async {
+    _sharedPreferences.setBool(prefKeyIsUserLoggedIn, true);
+  }
+
 //
-//   //login
-//   Future<void> setUserLoggedIn() async {
-//     _sharedPreferences.setBool(prefKeyIsUserLoggedIn, true);
-//   }
-//
-// //
-//   Future<bool> isUserLoggedIn() async {
-//     return _sharedPreferences.getBool(prefKeyIsUserLoggedIn) ?? false;
-//   }
+  Future<bool> isUserLoggedIn() async {
+    return _sharedPreferences.getBool(prefKeyIsUserLoggedIn) ?? false;
+  }
+
+  static Future<void> markOnBoardingViewed() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_keyOnBoardingViewed, true);
+  }
+
+  // Check if onboarding is viewed
+  static Future<bool> isOnBoardingViewed() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_keyOnBoardingViewed) ?? false;
+  }
 }

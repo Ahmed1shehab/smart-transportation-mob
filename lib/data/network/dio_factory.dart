@@ -4,7 +4,6 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:smart_transportation/app/app_prefs.dart';
 import 'package:smart_transportation/app/constants.dart';
 
-
 const String applicationJson = "application/json";
 const String contentType = "content-type";
 const String accept = "accept";
@@ -19,10 +18,12 @@ class DioFactory {
   Future<Dio> getDio() async {
     Dio dio = Dio();
     String language = await _appPreferences.getAppLanguage();
+    String? accessToken = await _appPreferences.getAccessToken();
+
     Map<String, String> headers = {
       contentType: applicationJson,
       accept: applicationJson,
-      authorization: Constants.token,
+      authorization: accessToken ?? Constants.token,
       defaultLanguage: language,
     };
     dio.options = BaseOptions(

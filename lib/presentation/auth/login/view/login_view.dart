@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:smart_transportation/app/app_prefs.dart';
 import 'package:smart_transportation/app/di.dart';
 import 'package:smart_transportation/presentation/auth/login/viewmodel/login_viewmodel.dart';
 import 'package:smart_transportation/presentation/common/state_renderer/state_rendered_impl.dart';
+import 'package:smart_transportation/presentation/on_boarding_organizer/bloc/popup_cubit.dart';
+import 'package:smart_transportation/presentation/on_boarding_organizer/home_view_organizer.dart';
 import 'package:smart_transportation/presentation/resources/asset_manager.dart';
 import 'package:smart_transportation/presentation/resources/color_manager.dart';
 import 'package:smart_transportation/presentation/resources/font_manager.dart';
@@ -20,6 +24,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final LoginViewModel _viewModel = instance<LoginViewModel>();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
 
   final TextEditingController _userIdentifierController =
       TextEditingController();
@@ -43,7 +48,16 @@ class _LoginViewState extends State<LoginView> {
         .listen((isLoggedIn) {
       if (isLoggedIn && mounted) {
         SchedulerBinding.instance.addPostFrameCallback((_) {
-          Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+          _appPreferences.setUserLoggedIn();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) => PopupCubit(),
+                child: const HomeViewOrganizer(),
+              ),
+            ),
+          );
         });
       }
     });
@@ -96,7 +110,7 @@ class _LoginViewState extends State<LoginView> {
                     style: TextStyle(
                         fontSize: FontSize.s24,
                         fontWeight: FontWeightManager.bold,
-                        color: ColorManager.onBoardingTitle),
+                        color: ColorManager.primary2),
                   ),
                   Text(
                     AppStrings.loginToAccount,
@@ -207,7 +221,7 @@ class _LoginViewState extends State<LoginView> {
                           style: TextStyle(
                             fontSize: FontSize.s20,
                             fontWeight: FontWeightManager.semiBold,
-                            color: ColorManager.onBoardingTitle,
+                            color: ColorManager.primary2,
                           ),
                         ),
                       ),

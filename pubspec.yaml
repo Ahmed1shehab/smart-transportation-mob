@@ -47,6 +47,9 @@ dependencies:
   flutter_svg: ^2.0.17
   freezed_annotation: ^2.0.0 # Move to dependencies
   http:
+  flutter_bloc:
+  bloc:
+
 
 dev_dependencies:
   flutter_test:
@@ -59,8 +62,8 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
   json_serializable: ^6.7.1
-  build_runner: ^2.1.0 # Required for code generation
-  freezed: ^2.0.0 # Move to dev_dependencies
+  build_runner: ^2.1.0
+  freezed: ^2.0.0
   retrofit_generator:
 
 # For information on the generic Dart part of this file, see the
@@ -81,6 +84,7 @@ flutter:
     - assets/images/memberorganizer/onboarding3.png
     - assets/images/memberorganizer/solid_circle_ic.png
     - assets/images/memberorganizer/hollow_circle_ic.png
+    - assets/images/memberorganizer/steps.png
     - assets/images/auth/auth_bg.svg
     - assets/images/auth/passwordEye.png
     - assets/images/auth/googleLogo.png

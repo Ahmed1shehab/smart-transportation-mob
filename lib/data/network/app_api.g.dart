@@ -12,16 +12,16 @@ class _AppServiceClient implements AppServiceClient {
   _AppServiceClient(
     this._dio, {
     this.baseUrl,
-
+    this.errorLogger,
   }) {
-    baseUrl ??= 'http://localhost:3000/api/';
+    baseUrl ??= 'http://192.168.1.12:3000';
   }
 
   final Dio _dio;
 
   String? baseUrl;
 
-
+  final ParseErrorLogger? errorLogger;
 
   @override
   Future<AuthenticationSignInResponse> login(
@@ -42,7 +42,7 @@ class _AppServiceClient implements AppServiceClient {
     )
         .compose(
           _dio.options,
-          '/auth/signin',
+          '/api/auth/signin',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -56,7 +56,60 @@ class _AppServiceClient implements AppServiceClient {
     try {
       _value = AuthenticationSignInResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
 
+  @override
+  Future<CreateOrganizerResponse> createNewOrganizer(
+    String name,
+    String type,
+    String phoneNumber,
+    String description,
+    MultipartFile image,
+    String street,
+    String city,
+    String state,
+    String postalCode,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {
+      'name': name,
+      'type': type,
+      'phoneNumber': phoneNumber,
+      'description': description,
+      'street': street,
+      'city': city,
+      'state': state,
+      'postalCode': postalCode,
+    };
+    final _options = _setStreamType<CreateOrganizerResponse>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: 'multipart/form-data',
+    )
+        .compose(
+          _dio.options,
+          '/api/store/details',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late CreateOrganizerResponse _value;
+    try {
+      _value = CreateOrganizerResponse.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
       rethrow;
     }
     return _value;

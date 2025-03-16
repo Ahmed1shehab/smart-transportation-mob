@@ -1,28 +1,31 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
-import 'package:dartz/dartz.dart';
 import 'package:smart_transportation/app/constants.dart';
 import 'package:smart_transportation/data/network/app_api.dart';
 import 'package:smart_transportation/data/network/requests.dart';
-
+import 'package:smart_transportation/data/response/response.dart';
 
 class RemoteDataSource {
-  final AppServiceClient appServiceClient;
+  final AppServiceClient _appServiceClient;
 
-  RemoteDataSource(this.appServiceClient);
+  RemoteDataSource(this._appServiceClient);
 
-  Future<http.Response> login(LoginRequest request) async {
-    final url = Uri.parse('${Constants.baseUrl}/signin');
-    return http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'identifier': request.identifier,
-        'password': request.password,
-      }),
+  Future<AuthenticationSignInResponse> login(LoginRequest request) async {
+    return await _appServiceClient.login(
+      request.identifier,
+      request.password,
     );
   }
 
-// Add other methods as needed
-}
+  Future<CreateOrganizerResponse> createOrganizer(
+      CreateOrganizerRequest request) async {
+    return await _appServiceClient.createNewOrganizer(
+      request.name,
+      request.type,
+      request.phoneNumber,
+      request.description,
+      request.image,
+      request.street,
+      request.city,
+      request.state,
+      request.postalCode,
+    );
+  }}

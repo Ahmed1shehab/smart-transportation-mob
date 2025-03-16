@@ -40,3 +40,62 @@ class AuthenticationSignIn {
     );
   }
 }
+
+
+
+//Organization Domain model
+class Organizer {
+  final String name;
+  final String type;
+  final String image;
+  final String description;
+  final String address;
+  final Owner owner;
+  final String id;
+  final int v;
+
+  Organizer({
+    required this.name,
+    required this.type,
+    required this.image,
+    required this.description,
+    required this.address,
+    required this.owner,
+    required this.id,
+    required this.v,
+  });
+}
+
+class Owner {
+  final User user;
+  final String id;
+  final int v;
+
+  Owner({
+    required this.user,
+    required this.id,
+    required this.v,
+  });
+}
+
+class User {
+  final String id;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String phoneNumber;
+  final String password;
+  final String status;
+  final int v;
+
+  User({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.phoneNumber,
+    required this.password,
+    required this.status,
+    required this.v,
+  });
+}

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:smart_transportation/app/app_prefs.dart';
+import 'package:smart_transportation/app/di.dart';
 import 'package:smart_transportation/domain/model/models.dart';
 import 'package:smart_transportation/presentation/on_boarding/viewmodel/onboarding_viewmodel.dart';
 import 'package:smart_transportation/presentation/resources/asset_manager.dart';
@@ -22,8 +24,10 @@ class OnboardingView extends StatefulWidget {
 class _OnboardingViewState extends State<OnboardingView> {
   final PageController _pageController = PageController();
   final OnboardingViewmodel _viewmodel = OnboardingViewmodel();
+  final AppPreferences _appPreferences = instance<AppPreferences>();
 
   _bind() {
+    _appPreferences.setOnBoardingScreenViewed();
     _viewmodel.start();
   }
 
@@ -112,7 +116,8 @@ class _OnboardingViewState extends State<OnboardingView> {
               } else {
                 _pageController.animateToPage(
                   _viewmodel.goNext(),
-                  duration: const Duration(milliseconds: AppConstants.sliderAnimation),
+                  duration: const Duration(
+                      milliseconds: AppConstants.sliderAnimation),
                   curve: Curves.easeInOut,
                 );
               }
@@ -126,8 +131,6 @@ class _OnboardingViewState extends State<OnboardingView> {
       ),
     );
   }
-
-
 
   Widget _getProperCircle(int index, int currentIndex) {
     if (index == currentIndex) {
@@ -159,7 +162,10 @@ class OnBoardingPage extends StatelessWidget {
               height: AppHeight.h300,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [ColorManager.gradientOnboarding1, ColorManager.gradientOnboarding2],
+                  colors: [
+                    ColorManager.gradientOnboarding1,
+                    ColorManager.gradientOnboarding2
+                  ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -178,7 +184,8 @@ class OnBoardingPage extends StatelessWidget {
               child: Text(
                 _sliderObject.title,
                 textAlign: TextAlign.center,
-                style: getBoldStyle(fontSize: FontSize.s24, color: ColorManager.onBoardingTitle),
+                style: getBoldStyle(
+                    fontSize: FontSize.s24, color: ColorManager.primary2),
               ),
             ),
             Padding(
@@ -186,7 +193,8 @@ class OnBoardingPage extends StatelessWidget {
               child: Text(
                 _sliderObject.subTitle,
                 textAlign: TextAlign.center,
-                style: getMediumStyle(fontSize: FontSize.s20, color: ColorManager.black),
+                style: getMediumStyle(
+                    fontSize: FontSize.s20, color: ColorManager.black),
               ),
             ),
           ],

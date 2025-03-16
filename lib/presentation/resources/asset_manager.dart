@@ -21,6 +21,10 @@ class ImageAssets {
   static const String appleLogo = "$imagePathAuth/appleLogo.png";
   static const String facebookLogo = "$imagePathAuth/facebookLogo.png";
   static const String microsoftLogo = "$imagePathAuth/microsoftLogo.png";
+
+  //createOrganizer
+  static const String steps =
+      "$imagePathMemberOrganizer/steps.png";
 }
 
 class JsonAssets {

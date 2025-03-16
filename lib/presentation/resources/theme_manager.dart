@@ -32,6 +32,10 @@ TextStyle getSemiBoldStyle(
         {double fontSize = FontSize.s12, required Color color}) =>
     _getTextStyle(fontSize, FontWeightManager.semiBold, color);
 
+TextStyle getTitleStyle(
+    {double fontSize = FontSize.s24, required Color color}) =>
+    _getTextStyle(fontSize, FontWeightManager.bold, color);
+
 ThemeData getApplicationTheme() {
   return ThemeData(
     primaryColor: ColorManager.primary,
@@ -63,11 +67,16 @@ ThemeData getApplicationTheme() {
     // Text theme with custom styles
     textTheme: TextTheme(
       displayLarge:
-          getBoldStyle(fontSize: 32, color: ColorManager.onBoardingTitle),
+          getBoldStyle(fontSize: 32, color: ColorManager.primary2),
       displayMedium:
-          getBoldStyle(fontSize: 24, color: ColorManager.onBoardingTitle),
-      bodyLarge: getRegularStyle(fontSize: 16, color: ColorManager.black),
+          getBoldStyle(fontSize: 24, color: ColorManager.primary2),
+      bodyLarge: getRegularStyle(fontSize: 18, color: ColorManager.black),
       bodyMedium: getRegularStyle(fontSize: 14, color: ColorManager.black),
+        labelMedium: getBoldStyle (fontSize: 16 , color: ColorManager.white),
+      headlineLarge: getTitleStyle(color: ColorManager.primary,fontSize: 30),
+      bodySmall: getTitleStyle(color: ColorManager.primary,fontSize: 18),
+      titleSmall:
+      getBoldStyle(fontSize: 16, color: ColorManager.primary2),
     ),
 
     // Input decoration theme
