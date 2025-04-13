@@ -4,7 +4,13 @@ part 'freezed_data_classes.freezed.dart';
 
 @freezed
 class LoginObject with _$LoginObject {
-  factory LoginObject(String identifier, String password) = _LoginObject;
+  factory LoginObject({
+    required String identifier,
+    required String password,
+    required String organizationId,
+  }) = _LoginObject;
 }
+
+
 
 

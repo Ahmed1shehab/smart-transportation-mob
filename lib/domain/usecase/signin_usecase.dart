@@ -22,8 +22,10 @@ class SigninUsecase
 }
 
 class SigninUsecaseInput {
-  String identifier;
-  String password;
+  final String identifier;
+  final String password;
+  final String organizationId;
 
-  SigninUsecaseInput(this.identifier, this.password);
+  SigninUsecaseInput(this.identifier, this.password, this.organizationId); // Update constructor
 }
+

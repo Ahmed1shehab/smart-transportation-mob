@@ -18,10 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$LoginObject {
   String get identifier => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
+  String get organizationId => throw _privateConstructorUsedError;
 
-  /// Create a copy of LoginObject
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $LoginObjectCopyWith<LoginObject> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -32,7 +31,7 @@ abstract class $LoginObjectCopyWith<$Res> {
           LoginObject value, $Res Function(LoginObject) then) =
       _$LoginObjectCopyWithImpl<$Res, LoginObject>;
   @useResult
-  $Res call({String identifier, String password});
+  $Res call({String identifier, String password, String organizationId});
 }
 
 /// @nodoc
@@ -45,13 +44,12 @@ class _$LoginObjectCopyWithImpl<$Res, $Val extends LoginObject>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of LoginObject
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? identifier = null,
     Object? password = null,
+    Object? organizationId = null,
   }) {
     return _then(_value.copyWith(
       identifier: null == identifier
@@ -61,6 +59,10 @@ class _$LoginObjectCopyWithImpl<$Res, $Val extends LoginObject>
       password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      organizationId: null == organizationId
+          ? _value.organizationId
+          : organizationId // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -74,7 +76,7 @@ abstract class _$$LoginObjectImplCopyWith<$Res>
       __$$LoginObjectImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String identifier, String password});
+  $Res call({String identifier, String password, String organizationId});
 }
 
 /// @nodoc
@@ -85,22 +87,25 @@ class __$$LoginObjectImplCopyWithImpl<$Res>
       _$LoginObjectImpl _value, $Res Function(_$LoginObjectImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of LoginObject
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? identifier = null,
     Object? password = null,
+    Object? organizationId = null,
   }) {
     return _then(_$LoginObjectImpl(
-      null == identifier
+      identifier: null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
-      null == password
+      password: null == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      organizationId: null == organizationId
+          ? _value.organizationId
+          : organizationId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -109,16 +114,21 @@ class __$$LoginObjectImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$LoginObjectImpl implements _LoginObject {
-  _$LoginObjectImpl(this.identifier, this.password);
+  _$LoginObjectImpl(
+      {required this.identifier,
+      required this.password,
+      required this.organizationId});
 
   @override
   final String identifier;
   @override
   final String password;
+  @override
+  final String organizationId;
 
   @override
   String toString() {
-    return 'LoginObject(identifier: $identifier, password: $password)';
+    return 'LoginObject(identifier: $identifier, password: $password, organizationId: $organizationId)';
   }
 
   @override
@@ -129,15 +139,16 @@ class _$LoginObjectImpl implements _LoginObject {
             (identical(other.identifier, identifier) ||
                 other.identifier == identifier) &&
             (identical(other.password, password) ||
-                other.password == password));
+                other.password == password) &&
+            (identical(other.organizationId, organizationId) ||
+                other.organizationId == organizationId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, identifier, password);
+  int get hashCode =>
+      Object.hash(runtimeType, identifier, password, organizationId);
 
-  /// Create a copy of LoginObject
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$LoginObjectImplCopyWith<_$LoginObjectImpl> get copyWith =>
@@ -145,18 +156,19 @@ class _$LoginObjectImpl implements _LoginObject {
 }
 
 abstract class _LoginObject implements LoginObject {
-  factory _LoginObject(final String identifier, final String password) =
-      _$LoginObjectImpl;
+  factory _LoginObject(
+      {required final String identifier,
+      required final String password,
+      required final String organizationId}) = _$LoginObjectImpl;
 
   @override
   String get identifier;
   @override
   String get password;
-
-  /// Create a copy of LoginObject
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  String get organizationId;
+  @override
+  @JsonKey(ignore: true)
   _$$LoginObjectImplCopyWith<_$LoginObjectImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

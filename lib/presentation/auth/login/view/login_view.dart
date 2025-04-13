@@ -175,59 +175,6 @@ class _LoginViewState extends State<LoginView> {
                       );
                     },
                   ),
-
-// OR Continue With
-                  const SizedBox(height: AppPadding.p20),
-                  Text(
-                    AppStrings.orContinueWith,
-                    style: TextStyle(
-                        fontSize: FontSize.s16,
-                        fontWeight: FontWeightManager.regular,
-                        color: ColorManager.primary),
-                  ),
-
-// Social Media Icons
-                  const SizedBox(height: AppPadding.p20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _buildSocialIcon(ImageAssets.googleLogo),
-                      _buildSocialIcon(ImageAssets.facebookLogo),
-                      _buildSocialIcon(ImageAssets.appleLogo),
-                      _buildSocialIcon(ImageAssets.microsoftLogo),
-                    ],
-                  ),
-
-// New User? Text
-                  const SizedBox(height: AppPadding.p20),
-                  Text(
-                    AppStrings.newUser,
-                    style: TextStyle(
-                        fontSize: FontSize.s16,
-                        fontWeight: FontWeightManager.regular,
-                        color: ColorManager.primary),
-                  ),
-// Register Now Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: AppPadding.p28),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, Routes.register);
-                        },
-                        child: Text(
-                          AppStrings.registerNow,
-                          style: TextStyle(
-                            fontSize: FontSize.s16,
-                            fontWeight: FontWeightManager.semiBold,
-                            color: ColorManager.onBoardingTitle,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),

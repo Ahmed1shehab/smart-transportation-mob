@@ -11,13 +11,19 @@ class LoginViewModel extends BaseViewModel
   StreamController<String>.broadcast();
   final StreamController<String> _passwordStreamController =
   StreamController<String>.broadcast();
+  final StreamController<String> _organizationIdStreamController =
+  StreamController<String>.broadcast();
   final StreamController<bool> _areAllInputsValidStreamController =
   StreamController<bool>.broadcast();
 
   final StreamController<bool> isUserLoggedInSuccessfullyStreamController =
   StreamController<bool>();
 
-  LoginObject signInObject = LoginObject("", "");
+  LoginObject signInObject = LoginObject(
+    identifier: "",
+    password: "",
+    organizationId: "",
+  );
 
   final SigninUsecase _signinUsecase;
 
@@ -27,6 +33,7 @@ class LoginViewModel extends BaseViewModel
   void dispose() {
     _identifierStreamController.close();
     _passwordStreamController.close();
+    _organizationIdStreamController.close();
     _areAllInputsValidStreamController.close();
     isUserLoggedInSuccessfullyStreamController.close();
   }
@@ -36,6 +43,9 @@ class LoginViewModel extends BaseViewModel
 
   @override
   Sink<String> get inputPassword => _passwordStreamController.sink;
+
+  @override
+  Sink<String> get inputOrganizationId => _organizationIdStreamController.sink;
 
   @override
   Sink<bool> get inputAreAllInputsValid => _areAllInputsValidStreamController.sink;
@@ -52,6 +62,9 @@ class LoginViewModel extends BaseViewModel
   Stream<bool> get outIsPasswordValid => _passwordStreamController.stream
       .map((password) => _isPasswordValid(password));
 
+  Stream<bool> get outIsOrganizationIdValid =>
+      _organizationIdStreamController.stream.map(_isOrganizationIdValid);
+
   @override
   void setIdentifier(String identifier) {
     inputIdentifier.add(identifier);
@@ -66,12 +79,24 @@ class LoginViewModel extends BaseViewModel
     _validateInputs();
   }
 
+  void setOrganizationId(String id) {
+    inputOrganizationId.add(id);
+    signInObject = signInObject.copyWith(organizationId: id);
+    _validateInputs();
+  }
+
+
   @override
   Future<void> login() async {
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.popUpLoadingState));
     (await _signinUsecase.execute(
-        SigninUsecaseInput(signInObject.identifier, signInObject.password)))
+        SigninUsecaseInput(
+          signInObject.identifier,
+          signInObject.password,
+          signInObject.organizationId,
+        )
+    ))
         .fold(
             (failure) => {
           inputState.add(ErrorState(
@@ -93,24 +118,33 @@ class LoginViewModel extends BaseViewModel
 
   bool _isIdentifierValid(String identifier) => identifier.isNotEmpty;
 
+
+  bool _isOrganizationIdValid(String id) => id.isNotEmpty;
+
   bool _areAllInputsValid() {
-    return _isPasswordValid(signInObject.password) &&
-        _isIdentifierValid(signInObject.identifier);
+    return _isIdentifierValid(signInObject.identifier) &&
+        _isPasswordValid(signInObject.password) &&
+        _isOrganizationIdValid(signInObject.organizationId);
   }
+
 }
 
 abstract class LoginViewModelInputs {
   void setIdentifier(String identifier);
   void setPassword(String password);
+  void setOrganizationId(String id);
+
   Future<void> login();
 
   Sink<String> get inputIdentifier;
   Sink<String> get inputPassword;
+  Sink<String> get inputOrganizationId;
   Sink<bool> get inputAreAllInputsValid;
 }
 
 abstract class LoginViewModelOutputs {
   Stream<bool> get outIsIdentifierValid;
   Stream<bool> get outIsPasswordValid;
+  Stream<bool> get outIsOrganizationIdValid;
   Stream<bool> get outAreAllInputsValid;
 }
