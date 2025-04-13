@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:supervisor_app/presentation/resources/strings_manager.dart';
 import '../../app/di.dart';
 import '../auth/login/view/login_view.dart';
-import '../auth/register/register_view.dart';
 import '../dashboard/dashboard_view.dart';
 import '../on_boarding/view/on_boarding_view.dart';
 import '../splash/splash_view.dart';
@@ -26,8 +25,6 @@ class RouteGenerator{
         initLoginModule();
         return MaterialPageRoute(builder: (_) => const LoginView());
       case Routes.register:
-        return MaterialPageRoute(builder: (_) => const RegisterView());
-      case Routes.mainRoute:
         return MaterialPageRoute(builder: (_) => const DashboardView());
 
       default:
