@@ -24,6 +24,7 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _userIdentifierController =
   TextEditingController();
   final TextEditingController _userPasswordController = TextEditingController();
+  final TextEditingController _organizationIdController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -53,6 +54,7 @@ class _LoginViewState extends State<LoginView> {
   void dispose() {
     _userIdentifierController.dispose();
     _userPasswordController.dispose();
+    _organizationIdController.dispose();
     _viewModel.dispose();
     super.dispose();
   }
@@ -77,7 +79,8 @@ class _LoginViewState extends State<LoginView> {
   Widget _getContentWidget() {
     return Column(
       children: [
-        Center(
+        SizedBox(
+          width: double.infinity,
           child: SvgPicture.asset(
             ImageAssets.authBG,
             fit: BoxFit.cover,
@@ -98,22 +101,26 @@ class _LoginViewState extends State<LoginView> {
                         fontWeight: FontWeightManager.bold,
                         color: ColorManager.onBoardingTitle),
                   ),
-                  Text(
-                    AppStrings.loginToAccount,
-                    style: TextStyle(
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: AppPadding.p28), //
+                    child: Text(
+                      AppStrings.loginToAccount,
+                      style: TextStyle(
                         fontSize: FontSize.s20,
                         fontWeight: FontWeightManager.semiBold,
-                        color: ColorManager.black),
+                        color: ColorManager.black,
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: AppPadding.p28),
+                  const SizedBox(height: AppPadding.p20),
                   _buildTextField(
                     controller: _userIdentifierController,
-                    labelText: AppStrings.emailOrPhone,
-                    hintText: AppStrings.emailOrPhone,
+                    labelText: AppStrings.email,
+                    hintText: AppStrings.email,
                     validationStream: _viewModel.outIsIdentifierValid,
                     keyboardType: TextInputType.text,
                   ),
-                  const SizedBox(height: AppPadding.p28),
+                  const SizedBox(height: AppPadding.p20),
                   _buildTextField(
                     controller: _userPasswordController,
                     labelText: AppStrings.password,
@@ -136,6 +143,14 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       ),
                     ),
+                  ),
+                  const SizedBox(height: AppPadding.p4),
+                  _buildTextField(
+                    controller: _organizationIdController,
+                    labelText: "Organization ID",
+                    hintText: "Enter your organization ID",
+                    validationStream: Stream.value(true),
+                    keyboardType: TextInputType.text,
                   ),
                   const SizedBox(height: AppPadding.p20),
                   StreamBuilder<bool>(
@@ -205,7 +220,7 @@ class _LoginViewState extends State<LoginView> {
                         child: Text(
                           AppStrings.registerNow,
                           style: TextStyle(
-                            fontSize: FontSize.s20,
+                            fontSize: FontSize.s16,
                             fontWeight: FontWeightManager.semiBold,
                             color: ColorManager.onBoardingTitle,
                           ),

@@ -43,7 +43,7 @@ class AppSize {
 }
 class AppHeight {
 
-  static const double h600 = 600.0;
+  static const double h700 = 700.0;
 
 
 

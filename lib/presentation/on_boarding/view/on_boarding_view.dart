@@ -56,14 +56,17 @@ class _OnboardingViewState extends State<OnboardingView> {
             itemBuilder: (context, index) {
               return OnBoardingPage(sliderViewObject.sliderObject);
             }),
-        bottomSheet: Container(
-          color: ColorManager.white,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _getCircleIndicator(sliderViewObject),
-              _getNavigationButtons()
-            ],
+        bottomSheet: Padding(
+          padding: const EdgeInsets.only(top: 0.0),
+          child: Container(
+            color: ColorManager.white,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _getCircleIndicator(sliderViewObject),
+                _getNavigationButtons(),
+              ],
+            ),
           ),
         ),
       );
@@ -76,7 +79,7 @@ class _OnboardingViewState extends State<OnboardingView> {
       children: [
         for (int i = 0; i < sliderViewObject.numberOfSlides; i++)
           Padding(
-            padding: const EdgeInsets.all(AppSize.s8),
+            padding: const EdgeInsets.symmetric(horizontal: AppSize.s8),
             child: _getProperCircle(i, sliderViewObject.currentIndex),
           )
       ],
@@ -161,7 +164,7 @@ class OnBoardingPage extends StatelessWidget {
         Column(
           children: [
             Container(
-              height: AppHeight.h600,
+              height: AppHeight.h700,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: _sliderObject.gradientColors,
