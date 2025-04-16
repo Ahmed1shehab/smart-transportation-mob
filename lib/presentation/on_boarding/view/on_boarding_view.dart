@@ -10,6 +10,8 @@ import '../../resources/strings_manager.dart';
 import '../../resources/styles_manager.dart';
 import '../../resources/values_manager.dart';
 import '../viewmodel/onboarding_viewmodel.dart';
+import 'package:supervisor_app/presentation/dashboard/dashboard_view.dart';
+
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
@@ -97,7 +99,8 @@ class _OnboardingViewState extends State<OnboardingView> {
           if (!isLastPage)
             TextButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, Routes.login);
+                //Navigator.pushReplacementNamed(context, Routes.login);
+                Navigator.pushReplacementNamed(context, Routes.mainRoute);
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -113,7 +116,8 @@ class _OnboardingViewState extends State<OnboardingView> {
           TextButton(
             onPressed: () {
               if (isLastPage) {
-                Navigator.pushReplacementNamed(context, Routes.login);
+                //Navigator.pushReplacementNamed(context, Routes.login);
+                Navigator.pushReplacementNamed(context, Routes.mainRoute);
               } else {
                 _pageController.animateToPage(
                   _viewmodel.goNext(),

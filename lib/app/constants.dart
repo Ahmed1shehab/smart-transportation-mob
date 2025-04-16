@@ -1,7 +1,7 @@
 
 
 class Constants{
-  static const String baseUrl = "http://192.168.1.12:3000/api/auth";
+  static const String baseUrl = "http://127.0.0.1:3005/api";
 
   static const String empty="";
   static const int  zero=0;

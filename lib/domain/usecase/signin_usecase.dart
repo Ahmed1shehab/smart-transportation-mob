@@ -17,7 +17,12 @@ class SigninUsecase
   Future<Either<Failure, AuthenticationSignIn>> execute(
       SigninUsecaseInput input) async {
     return await _repository
-        .login(LoginRequest(input.identifier, input.password));
+        .login(LoginRequest(
+      input.identifier,
+      input.password,
+      input.organizationId,
+    ));
+
   }
 }
 
