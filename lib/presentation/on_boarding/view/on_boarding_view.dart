@@ -99,8 +99,8 @@ class _OnboardingViewState extends State<OnboardingView> {
           if (!isLastPage)
             TextButton(
               onPressed: () {
-                //Navigator.pushReplacementNamed(context, Routes.login);
-                Navigator.pushReplacementNamed(context, Routes.mainRoute);
+                Navigator.pushReplacementNamed(context, Routes.login);
+                //Navigator.pushReplacementNamed(context, Routes.mainRoute);
               },
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -116,8 +116,8 @@ class _OnboardingViewState extends State<OnboardingView> {
           TextButton(
             onPressed: () {
               if (isLastPage) {
-                //Navigator.pushReplacementNamed(context, Routes.login);
-                Navigator.pushReplacementNamed(context, Routes.mainRoute);
+                Navigator.pushReplacementNamed(context, Routes.login);
+                //Navigator.pushReplacementNamed(context, Routes.mainRoute);
               } else {
                 _pageController.animateToPage(
                   _viewmodel.goNext(),

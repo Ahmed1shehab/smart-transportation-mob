@@ -26,12 +26,13 @@ class _LoginViewState extends State<LoginView> {
   final TextEditingController _userPasswordController = TextEditingController();
   final TextEditingController _organizationIdController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
   @override
   void initState() {
     super.initState();
     _bind();
+
   }
+
 
   void _bind() {
     _viewModel.start();
@@ -39,6 +40,9 @@ class _LoginViewState extends State<LoginView> {
             () => _viewModel.setIdentifier(_userIdentifierController.text));
     _userPasswordController.addListener(
             () => _viewModel.setPassword(_userPasswordController.text));
+    _organizationIdController.addListener(
+            () => _viewModel.setOrganizationId(_organizationIdController.text));
+
 
     _viewModel.isUserLoggedInSuccessfullyStreamController.stream
         .listen((isLoggedIn) {

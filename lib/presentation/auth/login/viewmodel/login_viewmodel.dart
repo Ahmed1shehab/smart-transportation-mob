@@ -67,29 +67,32 @@ class LoginViewModel extends BaseViewModel
 
   @override
   void setIdentifier(String identifier) {
-    inputIdentifier.add(identifier);
-    signInObject = signInObject.copyWith(identifier: identifier);
+    inputIdentifier.add(identifier.trim());
+    signInObject = signInObject.copyWith(identifier: identifier.trim());
     _validateInputs();
   }
 
   @override
   void setPassword(String password) {
-    inputPassword.add(password);
-    signInObject = signInObject.copyWith(password: password);
+    inputPassword.add(password.trim());
+    signInObject = signInObject.copyWith(password: password.trim());
     _validateInputs();
   }
 
+  @override
   void setOrganizationId(String id) {
-    inputOrganizationId.add(id);
-    signInObject = signInObject.copyWith(organizationId: id);
+    inputOrganizationId.add(id.trim());
+    signInObject = signInObject.copyWith(organizationId: id.trim());
     _validateInputs();
   }
+
 
 
   @override
   Future<void> login() async {
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.popUpLoadingState));
+
     (await _signinUsecase.execute(
         SigninUsecaseInput(
           signInObject.identifier,
@@ -99,7 +102,8 @@ class LoginViewModel extends BaseViewModel
     ))
         .fold(
             (failure) => {
-          inputState.add(ErrorState(
+            print("LOGIN FAILED: ${failure.message}"),
+        inputState.add(ErrorState(
               StateRendererType.popUpErrorState, failure.message))
         }, (data) {
       inputState.add(ContentState());
@@ -109,7 +113,6 @@ class LoginViewModel extends BaseViewModel
 
   @override
   void start() {}
-
   void _validateInputs() {
     inputAreAllInputsValid.add(_areAllInputsValid());
   }

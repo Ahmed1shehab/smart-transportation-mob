@@ -6,7 +6,9 @@ part 'requests.g.dart';
 class LoginRequest {
   final String identifier;
   final String password;
+  @JsonKey(name: "organization")
   final String organizationId;
+
 
   LoginRequest(this.identifier, this.password, this.organizationId);
 

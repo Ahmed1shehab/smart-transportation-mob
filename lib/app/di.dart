@@ -13,6 +13,7 @@ import '../data/network/network_info.dart';
 import '../domain/usecase/signin_usecase.dart';
 import '../presentation/auth/login/viewmodel/login_viewmodel.dart';
 import 'app_prefs.dart';
+import 'constants.dart';
 
 final instance = GetIt.instance;
 
@@ -35,7 +36,8 @@ Future<void> initAppModule() async {
   Dio dio = await instance<DioFactory>().getDio();
 
   // App Service Client
-  instance.registerLazySingleton<AppServiceClient>(() => AppServiceClient(dio));
+  instance.registerLazySingleton<AppServiceClient>(() => AppServiceClient(dio, baseUrl: Constants.baseUrl));
+
 
   // Remote data source
   instance.registerLazySingleton<RemoteDataSource>(
