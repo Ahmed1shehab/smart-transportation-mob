@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:supervisor_app/presentation/resources/strings_manager.dart';
-
+import 'package:provider/provider.dart';
 import '../../app/di.dart';
 import '../auth/login/view/login_view.dart';
+import '../dashboard/dashboard_viewmodel.dart';
 import '../dashboard/dashboard_view.dart';
 import '../on_boarding/view/on_boarding_view.dart';
 import '../splash/splash_view.dart';
+import '../shared/nav_bar.dart'; // ✅ now contains HomeLayout
 
 class Routes {
   static const String splashRoute = '/';
@@ -13,7 +14,6 @@ class Routes {
   static const String login = '/login';
   static const String mainRoute = "/main";
 }
-
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
@@ -26,21 +26,22 @@ class RouteGenerator {
         initLoginModule();
         return MaterialPageRoute(builder: (_) => const LoginView());
       case Routes.mainRoute:
-        return MaterialPageRoute(builder: (_) => const DashboardView());
-
-
+        return MaterialPageRoute(
+          builder: (_) => ChangeNotifierProvider(
+            create: (_) => DashboardViewModel()..fetchNextTrip(),
+            child: const HomeLayout(),
+          ),
+        );
       default:
-        return unDefinedRoute();
+        return _unDefinedRoute();
     }
   }
 
-  static Route<dynamic> unDefinedRoute() {
+  static Route<dynamic> _unDefinedRoute() {
     return MaterialPageRoute(
       builder: (_) => Scaffold(
-        appBar: AppBar(
-          title: const Text(AppStrings.noRouteFound),
-        ),
-        body: const Center(child: Text(AppStrings.noRouteFound)),
+        appBar: AppBar(title: const Text("No Route Found")),
+        body: const Center(child: Text("No Route Found")),
       ),
     );
   }

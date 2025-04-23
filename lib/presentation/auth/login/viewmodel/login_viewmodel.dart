@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../../domain/usecase/signin_usecase.dart';
 import '../../../base/baseviewmodel.dart';
 import '../../../common/freezed_data_classes.dart';
@@ -105,10 +107,14 @@ class LoginViewModel extends BaseViewModel
             print("LOGIN FAILED: ${failure.message}"),
         inputState.add(ErrorState(
               StateRendererType.popUpErrorState, failure.message))
-        }, (data) {
+        }, (data) async {
       inputState.add(ContentState());
       isUserLoggedInSuccessfullyStreamController.add(true);
-    });
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', data.token);
+    }
+    );
   }
 
   @override
