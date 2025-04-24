@@ -10,7 +10,7 @@ class StudentsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32),
+        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 15),
         child: ListView(
           children: [
             const Text(
@@ -21,110 +21,171 @@ class StudentsPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
+
+            // Bus Header
             Center(
               child: Column(
                 children: [
-                  const Icon(Icons.directions_bus, size: 28),
+                  const Icon(Icons.directions_bus, size: 34),
                   const SizedBox(height: 8),
                   Text(
                     'Bus Num #8900',
                     style: TextStyle(
                       color: ColorManager.primary,
-                      fontSize: 18,
-                      fontWeight: FontWeightManager.medium,
+                      fontSize: 20,
+                      fontWeight: FontWeightManager.semiBold,
                     ),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 16),
-            Row(
+
+            // Driver Info
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.person),
-                const SizedBox(width: 8),
-                const Text('Mahmoud'),
-                const Spacer(),
-                const Icon(Icons.people),
-                const SizedBox(width: 8),
-                const Text('20 students'),
-              ],
-            ),
-            const SizedBox(height: 24),
-
-
-
-            const Text(
-              'Scanned: (2)',
-              style: TextStyle(fontWeight: FontWeightManager.bold),
-            ),
-            const SizedBox(height: 12),
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: ColorManager.primary),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: ExpansionTile(
-                collapsedShape: const RoundedRectangleBorder(side: BorderSide.none),
-                shape: const RoundedRectangleBorder(side: BorderSide.none),
-                tilePadding: const EdgeInsets.symmetric(horizontal: 12),
-                childrenPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                title: Row(
+                Row(
                   children: [
-                    const CircleAvatar(
-                      radius: 20,
-                      backgroundImage: AssetImage('assets/images/avatar.png'),
-                    ),
-                    const SizedBox(width: 12),
-                    const Text(
-                      'Omar',
+                    const Icon(Icons.person),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Mahmoud',
                       style: TextStyle(
-                        fontWeight: FontWeightManager.bold,
                         fontSize: 16,
+                        fontWeight: FontWeightManager.semiBold,
+                        color: ColorManager.dark_blue,
                       ),
                     ),
-                    const Spacer(),
-                     Icon(Icons.accessibility_new, color: ColorManager.primary),
                   ],
                 ),
-                children: [
-                  _buildStudentDetails(),
-                  const Align(
-                    alignment: Alignment.bottomRight,
-                    child: Icon(Icons.phone, color: Colors.green),
-                  ),
-                ],
-              ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Icon(Icons.people),
+                    const SizedBox(width: 8),
+                    Text(
+                      '20 students',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeightManager.semiBold,
+                        color: ColorManager.dark_blue,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
 
             const SizedBox(height: 24),
 
+            // Scanned Section
+            Text(
+              'Scanned: (2)',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeightManager.bold,
+                color: ColorManager.secondary,
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Gradient Border Box
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    ColorManager.dark_blue.withOpacity(0.5),
+                    ColorManager.secondary.withOpacity(0.5)
+                  ],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              padding: const EdgeInsets.all(1.5),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: ExpansionTile(
+                  collapsedShape: const RoundedRectangleBorder(side: BorderSide.none),
+                  shape: const RoundedRectangleBorder(side: BorderSide.none),
+                  tilePadding: const EdgeInsets.symmetric(horizontal: 12),
+                  childrenPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                  title: Row(
+                    children: [
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: ColorManager.primary, width: 2),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      const Text(
+                        'Omar',
+                        style: TextStyle(
+                          fontWeight: FontWeightManager.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const Spacer(),
+                      Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: ColorManager.dark_blue.withOpacity(0.5), width: 2),
+                        ),
+                        child:  Icon(
+                          Icons.accessibility_new,
+                          size: 24,
+                          color: ColorManager.primary,
+                        ),
+                      ),
+                    ],
+                  ),
+                  children: [
+                    studentDetails(),
+                    const Align(
+                      alignment: Alignment.bottomRight,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 32),
+
+            // Unscanned Section Title Only
             const Text(
               'Unscanned: (18)',
               style: TextStyle(fontWeight: FontWeightManager.bold),
             ),
             const SizedBox(height: 12),
-
-            ..._buildExpandableStudentTiles(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildStudentDetails() {
+  Widget studentDetails() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children:  [
-        SizedBox(height: 8),
-        Text("ID: 555555", style: TextStyle(fontSize: 14)),
-        Text("Grade: 3", style: TextStyle(fontSize: 14)),
-        Text("Mansoura, Gehan Street", style: TextStyle(fontSize: 14)),
-        Text("Apartment number 5", style: TextStyle(fontSize: 14)),
-        Text("Phone number: +201028476529", style: TextStyle(fontSize: 14)),
+        SizedBox(height: 2),
+        Text("ID: 555555", style: TextStyle(fontSize: 16)),
+        Text("Grade: 3", style: TextStyle(fontSize: 16)),
+        Text("Mansoura, Gehan Street", style: TextStyle(fontSize: 16)),
+        Text("Apartment number 5", style: TextStyle(fontSize: 16)),
+        Text("Phone number: +201028476529", style: TextStyle(fontSize: 16)),
         Text(
           "Disability: Hearing Impairment",
           style: TextStyle(
-            fontSize: 14,
+            fontSize: 16,
             fontStyle: FontStyle.italic,
             color: ColorManager.primary,
           ),
@@ -132,48 +193,5 @@ class StudentsPage extends StatelessWidget {
         SizedBox(height: 8),
       ],
     );
-  }
-
-  List<Widget> _buildExpandableStudentTiles() {
-    final students = [
-      {'name': 'Reem', 'hasDisability': false},
-      {'name': 'Omar', 'hasDisability': false},
-      {'name': 'Omar', 'hasDisability': true},
-    ];
-
-    return students.map((student) {
-      return Padding(
-        padding: const EdgeInsets.only(bottom: 12),
-        child: ExpansionTile(
-          collapsedShape: const RoundedRectangleBorder(side: BorderSide.none),
-          shape: const RoundedRectangleBorder(side: BorderSide.none),
-          tilePadding: const EdgeInsets.symmetric(horizontal: 12),
-          childrenPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-          title: Row(
-            children: [
-              const CircleAvatar(
-                radius: 18,
-                backgroundImage: AssetImage('assets/images/avatar.png'),
-              ),
-              const SizedBox(width: 12),
-              Text(
-                student['name'] as String,
-                style: const TextStyle(fontWeight: FontWeightManager.medium),
-              ),
-              const Spacer(),
-              if (student['hasDisability'] as bool)
-                 Icon(Icons.accessibility_new, color: ColorManager.primary),
-            ],
-          ),
-          children: [
-            _buildStudentDetails(),
-            const Align(
-              alignment: Alignment.bottomRight,
-              child: Icon(Icons.phone, color: Colors.green),
-            ),
-          ],
-        ),
-      );
-    }).toList();
   }
 }
