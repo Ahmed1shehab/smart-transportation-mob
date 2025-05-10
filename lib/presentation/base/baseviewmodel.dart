@@ -1,19 +1,17 @@
 import 'dart:async';
-
 import 'package:smart_transportation/presentation/common/state_renderer/state_rendered_impl.dart';
-
 
 abstract class BaseViewModel extends BaseViewModelInputs
     implements BaseViewModelOutputs {
-  // shared variables and function that will be used through any view model.
-  final StreamController _inputStreamController =
+  // Use explicit type for StreamController
+  final StreamController<FlowState> _inputStreamController =
   StreamController<FlowState>.broadcast();
 
   @override
-  Sink get inputState => _inputStreamController.sink;
+  Sink<FlowState> get inputState => _inputStreamController.sink;
 
   @override
-  Stream<FlowState> get outputState => _inputStreamController.stream.map((flowState) => flowState);
+  Stream<FlowState> get outputState => _inputStreamController.stream;
 
   @override
   void dispose() {
@@ -22,15 +20,11 @@ abstract class BaseViewModel extends BaseViewModelInputs
 }
 
 abstract class BaseViewModelInputs {
-  void start(); // start view model job
-
-  void dispose(); // will be called when view model dies
-
-  Sink get inputState;
+  void start();
+  void dispose();
+  Sink<FlowState> get inputState;  // Explicitly typed Sink
 }
 
 abstract class BaseViewModelOutputs {
-  // will be implemented later
-
   Stream<FlowState> get outputState;
 }

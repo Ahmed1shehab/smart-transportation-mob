@@ -38,12 +38,14 @@ TextStyle getTitleStyle(
 
 ThemeData getApplicationTheme() {
   return ThemeData(
+
     primaryColor: ColorManager.primary,
     scaffoldBackgroundColor: Colors.white,
     colorScheme: ColorScheme.light(
       primary: ColorManager.primary,
       secondary: ColorManager.primary.withOpacity(0.8),
     ),
+
 
     // AppBar theme
     appBarTheme: AppBarTheme(
@@ -77,6 +79,12 @@ ThemeData getApplicationTheme() {
       bodySmall: getTitleStyle(color: ColorManager.primary,fontSize: 18),
       titleSmall:
       getBoldStyle(fontSize: 16, color: ColorManager.primary2),
+      headlineMedium:
+      getBoldStyle(fontSize: 18, color: ColorManager.primary),
+      labelLarge:
+      getBoldStyle(fontSize: 22, color: ColorManager.black),
+      labelSmall: getSemiBoldStyle(color: ColorManager.red,fontSize: FontSize.s12),
+
     ),
 
     // Input decoration theme
@@ -107,4 +115,5 @@ ThemeData getApplicationTheme() {
       ),
     ),
   );
+
 }

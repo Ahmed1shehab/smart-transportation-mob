@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.smart_transportation"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

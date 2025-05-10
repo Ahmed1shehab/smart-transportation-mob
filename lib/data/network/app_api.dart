@@ -10,24 +10,35 @@ part 'app_api.g.dart'; // Generated file
 abstract class AppServiceClient {
   factory AppServiceClient(Dio dio, {String baseUrl}) = _AppServiceClient;
 
+  //Login
   @POST("/api/auth/signin")
   Future<AuthenticationSignInResponse> login(
     @Field("identifier") String identifier,
     @Field("password") String password,
   );
-
+  //Register
+  @POST("/api/auth/signup")
   @MultiPart()
-  @POST('/api/store/details')
-  Future<CreateOrganizerResponse> createNewOrganizer(
-    @Field('name') String name,
-    @Field('type') String type,
-    @Field('phoneNumber') String phoneNumber,
-    @Field('description') String description,
-    @Part(name: 'image', contentType: "application/octet-stream")
-    MultipartFile image,
-    @Field('street') String street,
-    @Field('city') String city,
-    @Field('state') String state,
-    @Field('postalCode') String postalCode,
-  );
+  Future<AuthenticationSignUpResponse> register(@Body() FormData formData);
+
+  //create organizer onboard
+  @POST('/api/organizer/onboard')
+  @MultiPart()
+  Future<CreateOrganizerResponse> createNewOrganizer(@Body() FormData formData);
+  //create new organization 
+  @POST('/api/organizer/organization')
+  @MultiPart()
+  Future<CreateOrganizerResponse> createNewOrganization(@Body() FormData formData);
+  //Get THe organizations
+  @GET('/api/organizer/organization')
+  Future<GetAllOrganizationsResponse> getAllOrganizationsData();
+  @GET('/api/organizer/organization/{id}')
+  Future<GetOneOrganizationResponse> getOrganizationData(
+      @Path("id") String id,
+      );
+
+  //
+  @POST("/api/organizer/driver")
+  @MultiPart()
+  Future<CreateDriverResponse> createNewDriver(@Body() FormData formData);
 }

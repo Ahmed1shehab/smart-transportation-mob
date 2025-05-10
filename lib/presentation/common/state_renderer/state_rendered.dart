@@ -43,16 +43,16 @@ class StateRenderer extends StatelessWidget {
   Widget _getStateWidget(BuildContext context) {
     switch (stateRendererType) {
       case StateRendererType.popUpLoadingState:
-        return _getpopUpUpDialog(
+        return _getPopUpUpDialog(
             context, [_getAnimatedImage(JsonAssets.loading)]);
       case StateRendererType.popUpErrorState:
-        return _getpopUpUpDialog(context, [
+        return _getPopUpUpDialog(context, [
           _getAnimatedImage(JsonAssets.error),
           _getMessage(message),
           _getRetryButton(AppStrings.ok, context)
         ]);
       case StateRendererType.popUpSuccessState:
-        return _getpopUpUpDialog(context, [
+        return _getPopUpUpDialog(context, [
           _getAnimatedImage(JsonAssets.success),
           _getMessage(title),
           _getMessage(message),
@@ -77,7 +77,7 @@ class StateRenderer extends StatelessWidget {
     }
   }
 
-  Widget _getpopUpUpDialog(BuildContext context, List<Widget> children) {
+  Widget _getPopUpUpDialog(BuildContext context, List<Widget> children) {
     return Dialog(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSize.s14)),
@@ -138,6 +138,7 @@ class StateRenderer extends StatelessWidget {
         child: SizedBox(
             width: double.infinity,
             child: ElevatedButton(
+
                 onPressed: () {
                   if (stateRendererType ==
                       StateRendererType.fullScreenErrorState) {
@@ -148,7 +149,7 @@ class StateRenderer extends StatelessWidget {
                     Navigator.of(context).pop();
                   }
                 },
-                child: Text(buttonTitle))),
+                child: Text(buttonTitle,style: Theme.of(context).textTheme.labelMedium,))),
       ),
     );
   }

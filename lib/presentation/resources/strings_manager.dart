@@ -1,5 +1,7 @@
 class AppStrings {
+  static const String appName = "Sonic";
   static const String noRouteFound = "No Route Found";
+  static const String type = "type";
 
 //onBoarding
   static const String onBoardingTitle1 = "Welcome to Sonic!";
@@ -16,6 +18,7 @@ class AppStrings {
   static const String next = "Next";
   static const String finish = "Finish";
   static const String ok = "OK";
+  static const String submit = "Submit";
   static const String loading = "Loading";
   static const String tryAgain = "Try Again";
   static const String success = "Success";
@@ -41,9 +44,9 @@ class AppStrings {
   static const String start = "Start";
   static const String switchAccount = "Switch Account";
 
-  static const String step1 = "Step 1:";
+  static const String step1 = "Step 1";
   static const String organizationDetails = "Organization Details";
-  static const String step2 = "Step 2:";
+  static const String step2 = "Step 2";
   static const String addAddress = "Add Address";
 
   static const String youAgreeToOurTerms =
@@ -72,4 +75,150 @@ class AppStrings {
       'Do not upload false, misleading, or offensive content.';
 
   static const String accept = "Accept";
+
+  static const String orgDetails = "Organization Details";
+  static const String selectPhoto = "Select Photo";
+  static const String uploadYourLogo = "Upload Your Logo";
+  static const String uploadYourPhoto = "Upload Your Photo";
+
+  static const String organizationName = "Organization Name";
+
+  static const String organizationType = "Organization Type";
+  static const String descriptionOfService = "Description of Service";
+  static const String phoneNumber = "Phone Number";
+  static const String addressInformation = "Address Information";
+  static const String streetAddress = "Street Address";
+  static const String city = "City";
+  static const String state = "State";
+  static const String postalCode = "Postal Code";
+  static const String createOrganization = "Create Organization";
+  static const String organizationSuccess =
+      "Organization created successfully!";
+
+  static const String imageSizeShouldBe = " Image size should be less than 5MB";
+  static const String failedToPickImage = "  Failed to pick image:";
+
+  static const String organizationNameEmpty =
+      "Organization name cannot be empty";
+  static const String organizationNameTooShort = "Organization name too short";
+  static const String organizationTypeEmpty =
+      "Organization type cannot be empty";
+  static const String phoneNumberEmpty = "Phone number cannot be empty";
+  static const String descriptionEmpty = "Description cannot be empty";
+  static const String descriptionTooShort =
+      "Description should be at least 20 characters";
+
+  static const String registrationSuccessful = "Registered Successfully";
+
+//Register
+  static const String imageRequired = "Please select an image.";
+  static const String firstNameInvalid =
+      "First name must be at least 2 characters.";
+  static const String lastNameInvalid =
+      "Last name must be at least 2 characters.";
+  static const String emailInvalid = "Please enter a valid email address.";
+  static const String phoneNumberInvalid =
+      "Phone number must be at least 8 digits.";
+  static const String passwordInvalid =
+      "Password must be at least 6 characters.";
+
+  static const String confirmPasswordInvalid = "Please confirm your password.";
+  static const String passwordsDoNotMatch = "Passwords do not match.";
+  static const String register = "Register";
+  static const String createAccount = "Create Account";
+  static const String firstName = "First Name :";
+  static const String firstNameHint = "Enter your first name";
+  static const String lastName = "Last Name :";
+  static const String lastNameHint = "Enter your last name";
+  static const String email = "Email :";
+  static const String emailHint = "Enter your email";
+
+  static const String phoneNumberHint = "Enter your phone number";
+
+  static const String passwordHint = "Enter your password";
+  static const String confirmPassword = "Confirm Password";
+  static const String confirmPasswordHint = "Confirm your password";
+  static const String alreadyHaveAccount = "Already have an account?";
+  static const String loginNow = "Log in Now !";
+  static const String previous = "Previous";
+  static const String emailAndPassword = "Email And Password";
+  static const String passwordWeak = "Password is Weak";
+  static const String passwordMedium = "Password is Medium";
+  static const String passwordStrong = "Password is String";
+  //steps
+  static const String step1PersonalData = "Step 1: Add Personal Data";
+  static const String step2EmailAndPassword = "Step 2: Add Email & Phone";
+  static const String step3Password = "Step 3: Add Password";
+  static const String registrationFailed = "registrationFailed";
+
+
+
+  static const String registeredSuccessfullyMessage =
+      "You have been successfully registered. Please log in to continue.";
+  // Register Password And Email Screen
+  static const String gallery = "Gallery";
+  static const String camera = "Camera";
+
+
+  static const String emailAndPhoneNumber = "Email & Phone Number";
+  static const String confirmPhoneNumber= "Confirm Phone Number";
+  static const String confirmPhoneNumberHint = "Re-enter your phone number";
+  static const String confirmPhoneNumberInvalid = "Confirm phone number cannot be empty";
+  static const String phoneNumbersDoNotMatch = "Phone numbers do not match";
+//account Type page
+  static const String accountTypeTitle = "Account Type";
+  static const String accountTypeDescription = "Please choose your account type to determine the access level";
+  static const String member = "Member";
+  static const String memberDescription = "A Member can access the student’s details and track progress.";
+  static const String organizer = "Organizer";
+  static const String organizerDescription = "An Organizer manages the services, bus routes, driver assignments.";
+  static const String accountTypeChangeInfo = "You can change your account type at any time!";
+
+  //place holder settings
+  static const String uploadImageScreenPlaceholder = "Upload Image Screen (Placeholder)";
+  static const String finalRegistrationScreenPlaceholder = "Final Registration Screen (Placeholder)";
+
+
+  //dashboard
+  static const String address = "Address";
+  static const String dashboard = "Dashboard";
+  static const String noOrganizationsAvailable = "No Organizations Available";
+  static const String firstOrganizationDetails = "First Organization Details";
+  static const String allOrganizations = "All Organizations";
+
+//createDriver
+  static const String licenseInfoEmpty = "License Info cannot be empty";
+  static const String firstNameEmpty = "First Name cannot be empty";
+  static const String lastNameEmpty = "Last Name cannot be empty";
+  static const String emailEmpty = "Email cannot be empty";
+  static const String passwordEmpty = "Password cannot be empty";
+  static const String passwordTooShort = "Password must be at least 6 characters long";
+  static const String organizationIdEmpty = "Organization ID cannot be empty";
+  static const String retryAgain = "Retry Again";
+  static const String cancel = "Cancel";
+  static const String nullString = "";
+  static const String create = "Create";
+  static const String createDriver = "Create Driver";
+  static const String uploadDriverPhoto = "Upload Drive Photo";
+  static const String licenseInfo = "License Information";
+  static const String   licenseExpiryDate = "License Expiry Date";
+ static const String   licenseDate = "License Date";
+  static const String   selectDate = "Select Date";
+  static const String   organizationId = "OrganizationId";
+  static const String   driverCreatedSuccess = "Driver Created Success";
+  static const String   imagePickError = "Image Pick Error";
+
+
+
+//create organization
+static const String createNewOrganization = "Create New Organization";
+static const String organizationCreatedSuccessfully = "Organization Created Successfully";
+static const String enterAddressId = "Enter Address Id";
+static const String enterAddress = "Enter Address";
+
+static const String organizationNameHint = "Enter Organization Name";
+
+  static const String organizationInformation = " Organization Information";
+
+
 }

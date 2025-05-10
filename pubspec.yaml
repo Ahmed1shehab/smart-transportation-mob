@@ -49,6 +49,10 @@ dependencies:
   http:
   flutter_bloc:
   bloc:
+  image_picker:
+  rxdart:
+  provider:
+  intl:
 
 
 dev_dependencies:
@@ -81,11 +85,17 @@ flutter:
   assets:
     - assets/images/memberorganizer/onboarding1.png
     - assets/images/memberorganizer/onboarding2.png
+
     - assets/images/memberorganizer/onboarding3.png
     - assets/images/memberorganizer/solid_circle_ic.png
     - assets/images/memberorganizer/hollow_circle_ic.png
     - assets/images/memberorganizer/steps.png
     - assets/images/auth/auth_bg.svg
+    - assets/images/auth/app_bg.png
+    - assets/images/auth/step_1.png
+
+    - assets/images/auth/step_2.png
+    - assets/images/auth/step_3.png
     - assets/images/auth/passwordEye.png
     - assets/images/auth/googleLogo.png
     - assets/images/auth/appleLogo.png
@@ -96,6 +106,8 @@ flutter:
     - assets/json/loading.json
     - assets/json/empty.json
 
+    - assets/images/logo/sonic.png
+    - assets/images/logo/sonic.ico
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

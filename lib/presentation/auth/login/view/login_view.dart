@@ -1,13 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:smart_transportation/app/app_prefs.dart';
 import 'package:smart_transportation/app/di.dart';
 import 'package:smart_transportation/presentation/auth/login/viewmodel/login_viewmodel.dart';
 import 'package:smart_transportation/presentation/common/state_renderer/state_rendered_impl.dart';
-import 'package:smart_transportation/presentation/on_boarding_organizer/bloc/popup_cubit.dart';
-import 'package:smart_transportation/presentation/on_boarding_organizer/home_view_organizer.dart';
+import 'package:smart_transportation/presentation/common/widgets/auth/login_custom_text_field.dart';
+import 'package:smart_transportation/presentation/common/widgets/background_image.dart';
 import 'package:smart_transportation/presentation/resources/asset_manager.dart';
 import 'package:smart_transportation/presentation/resources/color_manager.dart';
 import 'package:smart_transportation/presentation/resources/font_manager.dart';
@@ -44,22 +43,25 @@ class _LoginViewState extends State<LoginView> {
     _userPasswordController.addListener(
         () => _viewModel.setPassword(_userPasswordController.text));
 
-    _viewModel.isUserLoggedInSuccessfullyStreamController.stream
-        .listen((isLoggedIn) {
-      if (isLoggedIn && mounted) {
-        SchedulerBinding.instance.addPostFrameCallback((_) {
-          _appPreferences.setUserLoggedIn();
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => BlocProvider(
-                create: (context) => PopupCubit(),
-                child: const HomeViewOrganizer(),
-              ),
-            ),
-          );
-        });
-      }
+    _viewModel.accountTypeStream.listen((accountType) {
+      if (!mounted) return;
+
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        _appPreferences.setUserLoggedIn();
+
+        if (accountType == 'none') {
+          Navigator.pushReplacementNamed(context, Routes.accountType);
+        } else if (accountType == 'organizer') {
+          Navigator.pushReplacementNamed(context, Routes.dashboard);
+        } else if (accountType == 'member') {
+          Navigator.pushReplacementNamed(context, Routes.mainRoute);
+        } else {
+          //todo remove this shit
+          if (kDebugMode) {
+            print("enta meen ya sa7by");
+          }
+        }
+      });
     });
   }
 
@@ -91,12 +93,7 @@ class _LoginViewState extends State<LoginView> {
   Widget _getContentWidget() {
     return Column(
       children: [
-        Center(
-          child: SvgPicture.asset(
-            ImageAssets.authBG,
-            fit: BoxFit.cover,
-          ),
-        ),
+        const BackgroundImage(),
         Expanded(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: AppPadding.p16),
@@ -120,7 +117,7 @@ class _LoginViewState extends State<LoginView> {
                         color: ColorManager.black),
                   ),
                   const SizedBox(height: AppPadding.p28),
-                  _buildTextField(
+                  loginBuildTextField(
                     controller: _userIdentifierController,
                     labelText: AppStrings.emailOrPhone,
                     hintText: AppStrings.emailOrPhone,
@@ -128,7 +125,7 @@ class _LoginViewState extends State<LoginView> {
                     keyboardType: TextInputType.text,
                   ),
                   const SizedBox(height: AppPadding.p28),
-                  _buildTextField(
+                  loginBuildTextField(
                     controller: _userPasswordController,
                     labelText: AppStrings.password,
                     hintText: AppStrings.password,
@@ -233,96 +230,6 @@ class _LoginViewState extends State<LoginView> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String labelText,
-    required String hintText,
-    required Stream<bool> validationStream,
-    required TextInputType keyboardType,
-    bool obscureText = false,
-  }) {
-    bool isHidden = obscureText;
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: AppPadding.p28),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                labelText,
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-              ),
-              const SizedBox(height: 8),
-              StreamBuilder<bool>(
-                stream: validationStream,
-                builder: (context, snapshot) {
-                  return TextFormField(
-                    controller: controller,
-                    keyboardType: keyboardType,
-                    obscureText: isHidden,
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: ColorManager.primary,
-                        ),
-                    decoration: InputDecoration(
-                      hintText: hintText,
-                      errorText:
-                          (snapshot.data ?? true) ? null : "Invalid $labelText",
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: ColorManager.primary, width: 2.0),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: ColorManager.primary, width: 1.5),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: ColorManager.red, width: 1.5),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: ColorManager.red, width: 2.0),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      suffixIcon: obscureText
-                          ? IconButton(
-                              icon: Icon(
-                                isHidden
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                color: ColorManager.grey,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  isHidden = !isHidden;
-                                });
-                              },
-                            )
-                          : null,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Invalid $labelText";
-                      }
-                      return null;
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 

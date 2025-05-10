@@ -7,6 +7,7 @@ const String prefKeyOnBoardingScreenViewed =
 const String prefKeyIsUserLoggedIn = "PREFS_KEY_IS_USER_LOGGED_IN";
 const String _keyAccessToken = 'access_token';
 const String _keyOnBoardingViewed = 'onboarding_viewed';
+const String _keyActiveOwner = 'active_owner';
 
 class AppPreferences {
   final SharedPreferences _sharedPreferences;
@@ -38,10 +39,16 @@ class AppPreferences {
     await prefs.remove(_keyAccessToken);
   }
 
+  Future<void> updateAccessToken(String newToken) async {
+    await _sharedPreferences.setString(_keyAccessToken, newToken);
+  }
+
   //onBoarding
   Future<void> setOnBoardingScreenViewed() async {
     _sharedPreferences.setBool(prefKeyOnBoardingScreenViewed, true);
   }
+
+
 
 //
   Future<bool> isOnBoardingScreenViewed() async {
@@ -67,5 +74,21 @@ class AppPreferences {
   static Future<bool> isOnBoardingViewed() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool(_keyOnBoardingViewed) ?? false;
+  }
+
+  Future<void> setActiveOwner(String ownerId) async {
+    
+    await _sharedPreferences.setString(_keyActiveOwner, ownerId);
+    
+  }
+
+  /// Get Active Owner
+  Future<String?> getActiveOwner() async {
+    return _sharedPreferences.getString(_keyActiveOwner);
+  }
+
+  /// Remove Active Owner (e.g., on logout)
+  Future<void> clearActiveOwner() async {
+    await _sharedPreferences.remove(_keyActiveOwner);
   }
 }

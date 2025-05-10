@@ -25,7 +25,7 @@ class _SplashViewState extends State<SplashView> {
   }
 
   _goNext() {
-    Navigator.pushReplacementNamed(context, Routes.onBoarding);
+    Navigator.pushReplacementNamed(context, Routes.login);
     // _appPreferences.isUserLoggedIn().then((isUserLoggedIn) {
     //   if (isUserLoggedIn) {
     //     //navigate Main Screen

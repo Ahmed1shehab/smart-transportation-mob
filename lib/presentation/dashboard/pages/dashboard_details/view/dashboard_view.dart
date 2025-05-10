@@ -3,16 +3,20 @@ import 'package:smart_transportation/app/di.dart';
 import 'package:smart_transportation/domain/model/models.dart';
 import 'package:smart_transportation/presentation/common/state_renderer/state_rendered.dart';
 import 'package:smart_transportation/presentation/common/state_renderer/state_rendered_impl.dart';
+import 'package:smart_transportation/presentation/dashboard/pages/dashboard_details/viewmodel/dashboard_viewmodel.dart';
 import 'package:smart_transportation/presentation/dashboard/pages/organization_detail_view.dart';
-import 'package:smart_transportation/presentation/dashboard/viewmodel/dashboard_viewmodel.dart';
+
 import 'package:smart_transportation/presentation/dashboard/widgets/left_cut_clipper.dart';
 import 'package:smart_transportation/presentation/on_boarding_organizer/pages/organization_details_view.dart';
 import 'package:smart_transportation/presentation/resources/asset_manager.dart';
+import 'package:smart_transportation/presentation/resources/route_manager.dart';
 import 'package:smart_transportation/presentation/resources/strings_manager.dart';
 import 'package:smart_transportation/presentation/resources/color_manager.dart';
 import 'package:smart_transportation/presentation/resources/values_manager.dart';
 
-import '../../resources/font_manager.dart';
+import '../../../../resources/font_manager.dart';
+
+
 
 class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
@@ -90,7 +94,7 @@ class _DashboardViewState extends State<DashboardView> {
           _buildFeatureButtons(),
           Divider(
             color: ColorManager.grey,
-            thickness: AppSize.s0_7,
+            thickness: AppSize.s0_3,
           ),
           const SizedBox(height: AppMargin.m20),
 
@@ -141,6 +145,7 @@ class _DashboardViewState extends State<DashboardView> {
                 Icon(
                   Icons.keyboard_arrow_down_rounded,
                   color: ColorManager.primary,
+                  size: AppSize.s32,
                 ),
               ],
             ),
@@ -155,12 +160,12 @@ class _DashboardViewState extends State<DashboardView> {
       {'icon': Icons.group, 'label': 'Members', 'route': '/members'},
       {
         'icon': Icons.notifications_active,
-        'label': 'Send Notifications',
+        'label': 'Send  Notifications',
         'route': '/notifications'
       },
       {'icon': Icons.directions_bus, 'label': 'Buses', 'route': '/buses'},
       {'icon': Icons.track_changes, 'label': 'Track Buses', 'route': '/track'},
-      {'icon': Icons.more_horiz, 'label': 'Other', 'route': '/other'},
+      {'icon': Icons.more_horiz, 'label': 'Other', 'route': '/createDriverRoute'},
     ];
     return Container(
       padding: const EdgeInsets.all(AppSize.s10),
@@ -321,63 +326,54 @@ class _DashboardViewState extends State<DashboardView> {
 
 
 
-  void _showSwitchOrganizationSheet() {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-      ),
-      builder: (_) {
-        return StreamBuilder<List<OrganizationItem>>(
-          stream: _viewModel.outputAllOrganizations,
-          builder: (context, snapshot) {
-            final organizations = snapshot.data ?? [];
+void _showSwitchOrganizationSheet() {
+  showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+    ),
+    builder: (_) {
+      return StreamBuilder<List<OrganizationItem>>(
+        stream: _viewModel.outputAllOrganizations,
+        builder: (context, snapshot) {
+          final organizations = snapshot.data ?? [];
 
-            return Padding(
-              padding: const EdgeInsets.all(AppPadding.p16),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    "Switch Organization",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  const SizedBox(height: AppSize.s16),
-                  ...organizations.map((org) {
-                    return ListTile(
-                      leading: CircleAvatar(
-                          backgroundImage: NetworkImage(org.fullImageUrl)),
-                      title: Text(org.name),
-                      onTap: () {
-                        Navigator.pop(context);
-                        _viewModel.selectOrganization(org.id);
-                      },
-                    );
-                  }),
-                  const Divider(),
-                  TextButton.icon(
-                    onPressed: () {
-                      // Navigate to Add Organization screen
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => const OrganizationDetailsView()));
+          return Padding(
+            padding: const EdgeInsets.all(AppPadding.p16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Switch Organization",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: AppSize.s16),
+                ...organizations.map((org) {
+                  return ListTile(
+                    leading: CircleAvatar(
+                        backgroundImage: NetworkImage(org.fullImageUrl)),
+                    title: Text(org.name),
+                    onTap: () {
+                      Navigator.pop(context);
+                      _viewModel.activateOrganization(org.id);
                     },
-                    icon: const Icon(Icons.add),
-                    label: const Text("Add new Organization"),
-                    style: TextButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppSize.s20),
-                        side: const BorderSide(color: Colors.blue),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
+                  );
+                }).toList(),
+                const Divider(),
+                TextButton.icon(
+                  onPressed: () {
+                   Navigator.pushNamed(context, Routes.createNewOrganization);
+
+                  },
+                  icon: const Icon(Icons.add),
+                  label: const Text("Add new Organization"),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
+  );
+}
 }
