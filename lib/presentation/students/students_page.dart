@@ -247,7 +247,7 @@ class _StudentsPageState extends State<StudentsPage> {
                         debugPrint('NFC Tag ID: ${tag.id}');
                         await FlutterNfcKit.finish();
 
-                        // Optionally show a SnackBar or alert
+                      
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Scanned NFC for ${student.name}: ${tag.id}')),
                         );
