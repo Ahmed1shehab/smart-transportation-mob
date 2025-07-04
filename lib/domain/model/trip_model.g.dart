@@ -7,6 +7,7 @@ part of 'trip_model.dart';
 // **************************************************************************
 
 _$TripImpl _$$TripImplFromJson(Map<String, dynamic> json) => _$TripImpl(
+      id: json['_id'] as String,
       departureTime: DateTime.parse(json['startTime'] as String),
       bus: Bus.fromJson(json['bus'] as Map<String, dynamic>),
       driver: Driver.fromJson(json['driver'] as Map<String, dynamic>),
@@ -17,6 +18,7 @@ _$TripImpl _$$TripImplFromJson(Map<String, dynamic> json) => _$TripImpl(
 
 Map<String, dynamic> _$$TripImplToJson(_$TripImpl instance) =>
     <String, dynamic>{
+      '_id': instance.id,
       'startTime': instance.departureTime.toIso8601String(),
       'bus': instance.bus,
       'driver': instance.driver,

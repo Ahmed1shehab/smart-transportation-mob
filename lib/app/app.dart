@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../presentation/resources/route_manager.dart';
@@ -23,6 +24,9 @@ class _AppState extends State<MyApp> {
       onGenerateRoute: RouteGenerator.getRoute,
       initialRoute: Routes.splashRoute,
       theme: getApplicationTheme(),
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
     );
   }
 }

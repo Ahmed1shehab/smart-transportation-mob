@@ -135,6 +135,11 @@ class LoginViewModel extends BaseViewModel
         _isPasswordValid(signInObject.password) &&
         _isOrganizationIdValid(signInObject.organizationId);
   }
+  // TODO: Remove!!
+  void validate() {
+    _validateInputs();
+  }
+
 
 }
 

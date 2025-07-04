@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
+
 import '../dashboard/dashboard_view.dart';
+import '../dashboard/dashboard_viewmodel.dart';
 import '../students/students_page.dart';
+import '../students/students_viewmodel.dart';
 import '../notifications/notifications_page.dart';
 import '../menu/menu_page.dart';
 import '../resources/color_manager.dart';
@@ -41,6 +46,7 @@ class Nav extends StatelessWidget {
           topRight: Radius.circular(30),
         ),
         child: BottomNavigationBar(
+          key: ValueKey(context.locale.languageCode),
           type: BottomNavigationBarType.fixed,
           currentIndex: currentIndex,
           onTap: onTap,
@@ -52,21 +58,21 @@ class Nav extends StatelessWidget {
           selectedLabelStyle: const TextStyle(fontSize: 14),
           unselectedLabelStyle: const TextStyle(fontSize: 12),
           items: [
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.location_on),
-              label: 'Map',
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.location_on),
+              label: 'nav.map'.tr(),
             ),
             BottomNavigationBarItem(
               icon: Icon(currentIndex == 1 ? Icons.people : Icons.people_outline),
-              label: 'Students',
+              label: 'nav.students'.tr(),
             ),
             BottomNavigationBarItem(
               icon: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  Icon(
-                    currentIndex == 2 ? Icons.notifications : Icons.notifications_none,
-                  ),
+                  Icon(currentIndex == 2
+                      ? Icons.notifications
+                      : Icons.notifications_none),
                   if (currentIndex != 2)
                     const Positioned(
                       top: -3,
@@ -82,18 +88,17 @@ class Nav extends StatelessWidget {
                     ),
                 ],
               ),
-              label: 'Notifications',
+              label: 'nav.notifications'.tr(),
             ),
-            const BottomNavigationBarItem(
-              icon: Icon(Icons.menu),
-              label: 'Menu',
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.menu),
+              label: 'nav.menu'.tr(),
             ),
           ],
         ),
       ),
     );
   }
-
 }
 
 /// Root screen managing tabs and content
@@ -106,13 +111,13 @@ class HomeLayout extends StatefulWidget {
 
 class _HomeLayoutState extends State<HomeLayout> {
   int _currentIndex = 0;
+  late StudentsViewModel studentsViewModel;
 
-  final List<Widget> _pages = const [
-    DashboardView(),
-    StudentsPage(),
-    NotificationsPage(),
-    MenuPage(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    studentsViewModel = StudentsViewModel();
+  }
 
   void _onTabTapped(int index) {
     setState(() {
@@ -122,14 +127,29 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _pages,
-      ),
-      bottomNavigationBar: Nav(
-        currentIndex: _currentIndex,
-        onTap: _onTabTapped,
+    final dashboardViewModel = Provider.of<DashboardViewModel>(context);
+    final tripId = dashboardViewModel.tripId ?? '';
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<StudentsViewModel>.value(value: studentsViewModel),
+      ],
+      child: Scaffold(
+        body: IndexedStack(
+          index: _currentIndex,
+          children: [
+            const DashboardView(),
+            dashboardViewModel.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : StudentsPage(tripId: tripId),
+            const NotificationsPage(),
+            const MenuPage(),
+          ],
+        ),
+        bottomNavigationBar: Nav(
+          currentIndex: _currentIndex,
+          onTap: _onTabTapped,
+        ),
       ),
     );
   }

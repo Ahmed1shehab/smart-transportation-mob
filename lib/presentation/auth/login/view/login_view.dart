@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,6 +10,7 @@ import '../../../resources/font_manager.dart';
 import '../../../resources/route_manager.dart';
 import '../../../resources/strings_manager.dart';
 import '../../../resources/values_manager.dart';
+import '../../forget_pass/forget_password.dart';
 import '../viewmodel/login_viewmodel.dart';
 
 class LoginView extends StatefulWidget {
@@ -31,6 +33,16 @@ class _LoginViewState extends State<LoginView> {
     super.initState();
     _bind();
 
+    // TODO: Remove it !!
+    _userIdentifierController.text = "ahmed@example.com";
+    _userPasswordController.text = "Supervisor@123";
+    _organizationIdController.text = "6802a6df5bf86eefa5f3fbaa";
+
+    _viewModel.setIdentifier(_userIdentifierController.text);
+    _viewModel.setPassword(_userPasswordController.text);
+    _viewModel.setOrganizationId(_organizationIdController.text);
+
+    _viewModel.validate();
   }
 
 
@@ -67,6 +79,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: ValueKey(context.locale.languageCode),
       body: StreamBuilder(
         stream: _viewModel.outputState,
         builder: (context, snapshot) {
@@ -79,6 +92,7 @@ class _LoginViewState extends State<LoginView> {
       ),
     );
   }
+
 
   Widget _getContentWidget() {
     return Column(
@@ -99,16 +113,17 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   const SizedBox(height: AppPadding.p8),
                   Text(
-                    AppStrings.welcomeBack,
+                    'login.welcome_back'.tr(),
                     style: TextStyle(
-                        fontSize: FontSize.s24,
-                        fontWeight: FontWeightManager.bold,
-                        color: ColorManager.onBoardingTitle),
+                      fontSize: FontSize.s24,
+                      fontWeight: FontWeightManager.bold,
+                      color: ColorManager.onBoardingTitle,
+                    ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: AppPadding.p28), //
+                    padding: const EdgeInsets.only(bottom: AppPadding.p28),
                     child: Text(
-                      AppStrings.loginToAccount,
+                      'login.login_to_account'.tr(),
                       style: TextStyle(
                         fontSize: FontSize.s20,
                         fontWeight: FontWeightManager.semiBold,
@@ -119,30 +134,34 @@ class _LoginViewState extends State<LoginView> {
                   const SizedBox(height: AppPadding.p20),
                   _buildTextField(
                     controller: _userIdentifierController,
-                    labelText: AppStrings.email,
-                    hintText: AppStrings.email,
+                    labelText: 'login.email'.tr(),
+                    hintText: 'login.email'.tr(),
                     validationStream: _viewModel.outIsIdentifierValid,
                     keyboardType: TextInputType.text,
                   ),
                   const SizedBox(height: AppPadding.p20),
                   _buildTextField(
                     controller: _userPasswordController,
-                    labelText: AppStrings.password,
-                    hintText: AppStrings.password,
+                    labelText: 'login.password'.tr(),
+                    hintText: 'login.password'.tr(),
                     validationStream: _viewModel.outIsPasswordValid,
                     keyboardType: TextInputType.visiblePassword,
                     obscureText: true,
                   ),
                   const SizedBox(height: AppPadding.p4),
                   Padding(
-                    padding:
-                    const EdgeInsets.symmetric(horizontal: AppPadding.p28),
+                    padding: const EdgeInsets.symmetric(horizontal: AppPadding.p28),
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const Forget_Password()),
+                          );
+                        },
                         child: Text(
-                          AppStrings.forgetPassword,
+                          'login.forget_password'.tr(),
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                       ),
@@ -151,8 +170,8 @@ class _LoginViewState extends State<LoginView> {
                   const SizedBox(height: AppPadding.p4),
                   _buildTextField(
                     controller: _organizationIdController,
-                    labelText: "Organization ID",
-                    hintText: "Enter your organization ID",
+                    labelText: 'login.organization_id'.tr(),
+                    hintText: 'login.organization_hint'.tr(),
                     validationStream: Stream.value(true),
                     keyboardType: TextInputType.text,
                   ),
@@ -161,18 +180,15 @@ class _LoginViewState extends State<LoginView> {
                     stream: _viewModel.outAreAllInputsValid,
                     builder: (context, snapshot) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppPadding.p28),
+                        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p28),
                         child: SizedBox(
                           width: double.infinity,
                           height: AppSize.s43,
                           child: ElevatedButton(
-                            onPressed: (snapshot.data ?? false)
-                                ? _viewModel.login
-                                : null,
-                            child: const Text(
-                              AppStrings.login,
-                              style: TextStyle(color: Colors.white),
+                            onPressed: (snapshot.data ?? false) ? _viewModel.login : null,
+                            child: Text(
+                              'login.button'.tr(),
+                              style: const TextStyle(color: Colors.white),
                             ),
                           ),
                         ),
@@ -224,34 +240,27 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     decoration: InputDecoration(
                       hintText: hintText,
-                      errorText:
-                      (snapshot.data ?? true) ? null : "Invalid $labelText",
+                      errorText: (snapshot.data ?? true) ? null : '${'login.invalid'.tr()} $labelText',
                       focusedBorder: OutlineInputBorder(
-                        borderSide:
-                        BorderSide(color: ColorManager.primary, width: 2.0),
+                        borderSide: BorderSide(color: ColorManager.primary, width: 2.0),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderSide:
-                        BorderSide(color: ColorManager.primary, width: 1.5),
+                        borderSide: BorderSide(color: ColorManager.primary, width: 1.5),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       errorBorder: OutlineInputBorder(
-                        borderSide:
-                        BorderSide(color: ColorManager.red, width: 1.5),
+                        borderSide: BorderSide(color: ColorManager.red, width: 1.5),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
-                        borderSide:
-                        BorderSide(color: ColorManager.red, width: 2.0),
+                        borderSide: BorderSide(color: ColorManager.red, width: 2.0),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       suffixIcon: obscureText
                           ? IconButton(
                         icon: Icon(
-                          isHidden
-                              ? Icons.visibility_off
-                              : Icons.visibility,
+                          isHidden ? Icons.visibility_off : Icons.visibility,
                           color: ColorManager.grey,
                         ),
                         onPressed: () {
@@ -264,7 +273,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Invalid $labelText";
+                        return '${'login.invalid'.tr()} $labelText';
                       }
                       return null;
                     },
@@ -275,22 +284,6 @@ class _LoginViewState extends State<LoginView> {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildSocialIcon(String asset) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: GestureDetector(
-        onTap: () {
-          // Handle social login
-        },
-        child: Image.asset(
-          asset,
-          width: 40,
-          height: 40,
-        ),
-      ),
     );
   }
 }

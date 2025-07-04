@@ -6,6 +6,7 @@ part 'trip_model.g.dart';
 @freezed
 class Trip with _$Trip {
   const factory Trip({
+    @JsonKey(name: '_id') required String id,
     @JsonKey(name: 'startTime') required DateTime departureTime,
     required Bus bus,
     required Driver driver,

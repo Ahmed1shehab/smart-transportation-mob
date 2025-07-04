@@ -6,6 +6,12 @@ import '../../../app/constants.dart';
 
 class DashboardViewModel extends ChangeNotifier {
   Trip? _trip;
+  String? tripId;
+  String? busModel;
+  String? driverName;
+  String? supervisorName;
+  int totalStudents = 0;
+
   Trip? get trip => _trip;
 
   bool _isLoading = false;
@@ -28,11 +34,18 @@ class DashboardViewModel extends ChangeNotifier {
 
       final responseData = response.data['data'];
       _trip = Trip.fromJson(responseData);
+      tripId = _trip?.id;
+      busModel = _trip?.bus.model;
+      driverName = "${_trip?.driver.firstName} ${_trip?.driver.lastName}";
+      supervisorName = "${_trip?.supervisor.firstName} ${_trip?.supervisor.lastName}";
+      totalStudents = _trip?.totalStudents ?? 0;
+
 
 
       if (response.statusCode == 200 && response.data != null) {
 
         _trip = Trip.fromJson(response.data['data']);
+
       }
     } catch (e) {
       _trip = null;

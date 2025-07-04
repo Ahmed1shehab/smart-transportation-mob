@@ -11,6 +11,9 @@ class ColorManager{
 
 
 
+
+
+
   static Color gradientOnboarding1 = const Color(0xFF0098FF);
   static Color gradientOnboarding2 = const Color(0xFFF2FAFF);
   static Color grey = const Color(0xFF7D7A7A);

@@ -20,6 +20,8 @@ Trip _$TripFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Trip {
+  @JsonKey(name: '_id')
+  String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'startTime')
   DateTime get departureTime => throw _privateConstructorUsedError;
   Bus get bus => throw _privateConstructorUsedError;
@@ -38,7 +40,8 @@ abstract class $TripCopyWith<$Res> {
       _$TripCopyWithImpl<$Res, Trip>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'startTime') DateTime departureTime,
+      {@JsonKey(name: '_id') String id,
+      @JsonKey(name: 'startTime') DateTime departureTime,
       Bus bus,
       Driver driver,
       Supervisor supervisor,
@@ -62,6 +65,7 @@ class _$TripCopyWithImpl<$Res, $Val extends Trip>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? departureTime = null,
     Object? bus = null,
     Object? driver = null,
@@ -69,6 +73,10 @@ class _$TripCopyWithImpl<$Res, $Val extends Trip>
     Object? totalStudents = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       departureTime: null == departureTime
           ? _value.departureTime
           : departureTime // ignore: cast_nullable_to_non_nullable
@@ -125,7 +133,8 @@ abstract class _$$TripImplCopyWith<$Res> implements $TripCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'startTime') DateTime departureTime,
+      {@JsonKey(name: '_id') String id,
+      @JsonKey(name: 'startTime') DateTime departureTime,
       Bus bus,
       Driver driver,
       Supervisor supervisor,
@@ -149,6 +158,7 @@ class __$$TripImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? departureTime = null,
     Object? bus = null,
     Object? driver = null,
@@ -156,6 +166,10 @@ class __$$TripImplCopyWithImpl<$Res>
     Object? totalStudents = null,
   }) {
     return _then(_$TripImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       departureTime: null == departureTime
           ? _value.departureTime
           : departureTime // ignore: cast_nullable_to_non_nullable
@@ -184,7 +198,8 @@ class __$$TripImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TripImpl implements _Trip {
   const _$TripImpl(
-      {@JsonKey(name: 'startTime') required this.departureTime,
+      {@JsonKey(name: '_id') required this.id,
+      @JsonKey(name: 'startTime') required this.departureTime,
       required this.bus,
       required this.driver,
       required this.supervisor,
@@ -193,6 +208,9 @@ class _$TripImpl implements _Trip {
   factory _$TripImpl.fromJson(Map<String, dynamic> json) =>
       _$$TripImplFromJson(json);
 
+  @override
+  @JsonKey(name: '_id')
+  final String id;
   @override
   @JsonKey(name: 'startTime')
   final DateTime departureTime;
@@ -207,7 +225,7 @@ class _$TripImpl implements _Trip {
 
   @override
   String toString() {
-    return 'Trip(departureTime: $departureTime, bus: $bus, driver: $driver, supervisor: $supervisor, totalStudents: $totalStudents)';
+    return 'Trip(id: $id, departureTime: $departureTime, bus: $bus, driver: $driver, supervisor: $supervisor, totalStudents: $totalStudents)';
   }
 
   @override
@@ -215,6 +233,7 @@ class _$TripImpl implements _Trip {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TripImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.departureTime, departureTime) ||
                 other.departureTime == departureTime) &&
             (identical(other.bus, bus) || other.bus == bus) &&
@@ -228,7 +247,7 @@ class _$TripImpl implements _Trip {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, departureTime, bus, driver, supervisor, totalStudents);
+      runtimeType, id, departureTime, bus, driver, supervisor, totalStudents);
 
   @JsonKey(ignore: true)
   @override
@@ -246,7 +265,8 @@ class _$TripImpl implements _Trip {
 
 abstract class _Trip implements Trip {
   const factory _Trip(
-      {@JsonKey(name: 'startTime') required final DateTime departureTime,
+      {@JsonKey(name: '_id') required final String id,
+      @JsonKey(name: 'startTime') required final DateTime departureTime,
       required final Bus bus,
       required final Driver driver,
       required final Supervisor supervisor,
@@ -254,6 +274,9 @@ abstract class _Trip implements Trip {
 
   factory _Trip.fromJson(Map<String, dynamic> json) = _$TripImpl.fromJson;
 
+  @override
+  @JsonKey(name: '_id')
+  String get id;
   @override
   @JsonKey(name: 'startTime')
   DateTime get departureTime;
