@@ -138,7 +138,7 @@ class _HomeLayoutState extends State<HomeLayout> {
         body: IndexedStack(
           index: _currentIndex,
           children: [
-            const DashboardView(),
+             DashboardView(),
             dashboardViewModel.isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : StudentsPage(tripId: tripId),

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../../app/di.dart';
 import '../auth/login/view/login_view.dart';
 import '../dashboard/dashboard_viewmodel.dart';
 import '../dashboard/dashboard_view.dart';
 import '../on_boarding/view/on_boarding_view.dart';
 import '../splash/splash_view.dart';
-import '../shared/nav_bar.dart'; // ✅ now contains HomeLayout
+import '../shared/nav_bar.dart';
+import '../dashboard/map_viewmodel.dart';
 
 class Routes {
   static const String splashRoute = '/';
@@ -20,18 +22,25 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => const SplashView());
+
       case Routes.onBoarding:
         return MaterialPageRoute(builder: (_) => const OnboardingView());
+
       case Routes.login:
         initLoginModule();
         return MaterialPageRoute(builder: (_) => const LoginView());
+
       case Routes.mainRoute:
         return MaterialPageRoute(
-          builder: (_) => ChangeNotifierProvider(
-            create: (_) => DashboardViewModel()..fetchNextTrip(),
+          builder: (_) => MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (_) => DashboardViewModel()..fetchNextTrip()),
+              ChangeNotifierProvider(create: (_) => MapViewModel()),
+            ],
             child: const HomeLayout(),
           ),
         );
+
       default:
         return _unDefinedRoute();
     }

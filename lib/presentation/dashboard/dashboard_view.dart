@@ -36,16 +36,31 @@ class _DashboardViewState extends State<DashboardView> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<DashboardViewModel>(context, listen: false);
+    final supervisorName = viewModel.supervisorName;
+
     return _isSupervising
-        ? MapScreen(onBack: _stopSupervising)
-        : DashboardTripContent(onStart: _startSupervising);
+        ? MapScreen(
+      onBack: _stopSupervising,
+      supervisorName: viewModel.supervisorName ?? 'Supervisor',
+      tripId: viewModel.tripId ?? '',
+    )
+        : DashboardTripContent(
+      onStart: _startSupervising,
+      supervisorName: supervisorName ?? 'Supervisor',
+    );
   }
 }
 
 class DashboardTripContent extends StatelessWidget {
   final VoidCallback onStart;
+  final String supervisorName;
 
-  const DashboardTripContent({super.key, required this.onStart});
+  const DashboardTripContent({
+    super.key,
+    required this.onStart,
+    required this.supervisorName,
+  });
 
   String getTimeUntilTrip(DateTime tripTime) {
     final now = DateTime.now();
@@ -67,12 +82,8 @@ class DashboardTripContent extends StatelessWidget {
           final isLoading = viewModel.isLoading;
 
           final hasTrip = trip != null;
-          final supervisorName = hasTrip
-              ? "${trip.supervisor.firstName} ${trip.supervisor.lastName}"
-              : "Supervisor";
-          final driverName = hasTrip
-              ? "${trip.driver.firstName} ${trip.driver.lastName}"
-              : "-";
+          final driverName =
+          hasTrip ? "${trip.driver.firstName} ${trip.driver.lastName}" : "-";
           final busModel = hasTrip ? trip.bus.model : "-";
           final studentCount = hasTrip ? trip.totalStudents.toString() : "-";
           final tripCountdown = hasTrip

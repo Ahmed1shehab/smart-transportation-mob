@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_nfc_kit/flutter_nfc_kit.dart';
 import '../resources/color_manager.dart';
 import '../resources/font_manager.dart';
 import '../dashboard/dashboard_viewmodel.dart';
@@ -93,9 +93,7 @@ class _StudentsPageState extends State<StudentsPage> {
                               ),
                             ),
                             const SizedBox(height: 11),
-                            ...vm.students
-                                .map((student) => _buildStudentCard(student))
-                                .toList(),
+                            ...vm.students.map(_buildStudentCard).toList(),
                           ],
                         ),
                       ),
@@ -203,30 +201,67 @@ class _StudentsPageState extends State<StudentsPage> {
                       imageVisible = true;
                     });
                   },
-                  child: Container(
-                    width: 45,
-                    height: 45,
-                    child: ClipOval(
-                      child: Image.network(
-                        student.image,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                        const Icon(Icons.person, size: 45),
-                      ),
+                  child: ClipOval(
+                    child: Image.network(
+                      student.image,
+                      width: 45,
+                      height: 45,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) =>
+                      const Icon(Icons.person, size: 45),
                     ),
                   ),
                 ),
                 const SizedBox(width: 12),
-                Text(
-                  student.name,
-                  style: TextStyle(
-                    fontWeight: FontWeightManager.semiBold,
-                    fontSize: 16,
-                    color: ColorManager.dark_blue,
-                    letterSpacing: 2,
+                Expanded(
+                  child: Text(
+                    student.name,
+                    style: TextStyle(
+                      fontWeight: FontWeightManager.semiBold,
+                      fontSize: 16,
+                      color: ColorManager.dark_blue,
+                      letterSpacing: 2,
+                    ),
                   ),
                 ),
-                const Spacer(),
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      )
+                    ],
+                  ),
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: const Icon(Icons.nfc, size: 26),
+                    color: ColorManager.primary,
+                    onPressed: () async {
+                      try {
+                        final tag = await FlutterNfcKit.poll();
+                        debugPrint('NFC tapped for ${student.name}');
+                        debugPrint('NFC Tag ID: ${tag.id}');
+                        await FlutterNfcKit.finish();
+
+                        // Optionally show a SnackBar or alert
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Scanned NFC for ${student.name}: ${tag.id}')),
+                        );
+                      } catch (e) {
+                        debugPrint('NFC Error: $e');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('NFC Error: $e')),
+                        );
+                      }
+                    },
+                  ),
+
+                ),
+                const SizedBox(width: 8),
                 if (student.disabilities.isNotEmpty)
                   Container(
                     width: 32,
