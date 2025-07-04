@@ -30,7 +30,7 @@ class _MapScreenState extends State<MapScreen> {
 
   final LatLng initialCenter = LatLng(31.0364, 31.3807);
 
-  /// ✨ TEMP  — replace these with real student lat/lon from your API / model
+
   final List<LatLng> _studentLocations = [
     LatLng(31.0385, 31.3795), // student 1
     LatLng(31.0348, 31.3822), // student 2
@@ -192,7 +192,7 @@ class _MapScreenState extends State<MapScreen> {
             ),
           ),
 
-          // ───── Student cards (unchanged except avatar top) ─────
+          // ───── Student cards  ─────
           DraggableScrollableSheet(
             initialChildSize: 0.3,
             minChildSize: 0.2,
