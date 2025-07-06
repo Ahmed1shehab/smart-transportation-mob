@@ -53,6 +53,8 @@ dependencies:
   rxdart:
   provider:
   intl:
+  url_launcher: 
+  flutter_phone_direct_caller: 
 
 
 dev_dependencies:
@@ -101,6 +103,9 @@ flutter:
     - assets/images/auth/appleLogo.png
     - assets/images/auth/facebookLogo.png
     - assets/images/auth/microsoftLogo.png
+    - assets/images/dashboard/home.png
+    - assets/images/dashboard/menu.png
+    - assets/images/dashboard/notification.png
     - assets/json/success.json
     - assets/json/error.json
     - assets/json/loading.json
@@ -108,6 +113,20 @@ flutter:
 
     - assets/images/logo/sonic.png
     - assets/images/logo/sonic.ico
+    - assets/images/logo/nti.jpg
+
+
+    - assets/images/dashboard/people/ahmed.jpg
+    - assets/images/dashboard/people/awad.jpg
+    - assets/images/dashboard/people/adham.jpg
+    - assets/images/dashboard/people/haggar.jpg
+    - assets/images/dashboard/people/supervisor1.jpg
+    - assets/images/dashboard/people/supervisor2.jpg
+    - assets/images/dashboard/people/supervisor3.jpg
+    - assets/images/dashboard/people/supervisor4.jpg
+
+
+
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

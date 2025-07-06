@@ -5,23 +5,17 @@ import 'package:smart_transportation/app/app_prefs.dart';
 import 'package:smart_transportation/app/constants.dart';
 
 const String applicationJson = "application/json";
-// const String contentType = "content-type";
 const String accept = "accept";
 const String authorization = "authorization";
 const String defaultLanguage = "language";
 
 class DioFactory {
   final AppPreferences _appPreferences;
-
   DioFactory(this._appPreferences);
-
   Future<Dio> getDio() async {
     Dio dio = Dio();
-
     String language = await _appPreferences.getAppLanguage();
     String? token = await _appPreferences.getAccessToken();
-
-    // Set base options without content-type
     dio.options = BaseOptions(
       baseUrl: Constants.baseUrl,
       headers: {

@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smart_transportation/app/constants.dart';
 import 'package:smart_transportation/app/di.dart';
 import 'package:smart_transportation/presentation/common/state_renderer/state_rendered_impl.dart';
 import 'package:smart_transportation/presentation/on_boarding_organizer/viewmodel/organization_details_viewmodel.dart';
 import 'package:smart_transportation/presentation/resources/color_manager.dart';
+import 'package:smart_transportation/presentation/resources/route_manager.dart';
 import 'package:smart_transportation/presentation/resources/strings_manager.dart';
 import 'package:smart_transportation/presentation/resources/values_manager.dart';
 
@@ -38,6 +40,7 @@ class _OrganizationDetailsViewState extends State<OrganizationDetailsView> {
     super.initState();
     _viewModel = instance<OrganizationDetailsViewmodel>();
     _bind();
+    _listenToNavigationEvents();
   }
 
   void _bind() {
@@ -64,6 +67,18 @@ class _OrganizationDetailsViewState extends State<OrganizationDetailsView> {
     });
     _postalController.addListener(() {
       _viewModel.setPostalCode(_postalController.text);
+    });
+  }
+
+  void _listenToNavigationEvents() {
+    _viewModel.isOrganizationCreatedSuccessfullyStream.listen((isSuccess) {
+      if (isSuccess) {
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          debugPrint('[LoginView] Navigating to Main');
+        
+          Navigator.of(context).pushReplacementNamed(Routes.dashboard);
+        });
+      }
     });
   }
 
@@ -359,7 +374,7 @@ class _OrganizationDetailsViewState extends State<OrganizationDetailsView> {
                   },
                 ),
 
-// Success Message
+// Success Message (Optional - you might want to remove this since we're navigating away)
                 StreamBuilder<bool>(
                   stream: _viewModel.isOrganizationCreatedSuccessfullyStream,
                   builder: (context, snapshot) {
@@ -466,4 +481,3 @@ class _OrganizationDetailsViewState extends State<OrganizationDetailsView> {
     );
   }
 }
-//newww

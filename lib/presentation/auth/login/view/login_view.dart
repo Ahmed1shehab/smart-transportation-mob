@@ -12,6 +12,7 @@ import 'package:smart_transportation/presentation/resources/color_manager.dart';
 import 'package:smart_transportation/presentation/resources/font_manager.dart';
 import 'package:smart_transportation/presentation/resources/route_manager.dart';
 import 'package:smart_transportation/presentation/resources/strings_manager.dart';
+import 'package:smart_transportation/presentation/utils/size.config.dart';
 import '../../../resources/values_manager.dart';
 
 class LoginView extends StatefulWidget {
@@ -74,162 +75,168 @@ class _LoginViewState extends State<LoginView> {
   }
 
   @override
-  @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context); // ✅ Add this line
     return Scaffold(
       body: StreamBuilder(
         stream: _viewModel.outputState,
         builder: (context, snapshot) {
-          return snapshot.data?.getScreenWidget(context, _getContentWidget(),
-                  () {
-                _viewModel.login();
-              }) ??
-              _getContentWidget();
+          return snapshot.data?.getScreenWidget(context, _getContentWidget(), () {
+            _viewModel.login();
+          }) ?? _getContentWidget();
         },
       ),
     );
   }
 
   Widget _getContentWidget() {
-    return Column(
-      children: [
-        const BackgroundImage(),
-        Expanded(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: AppPadding.p16),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  const SizedBox(height: AppPadding.p8),
-                  Text(
-                    AppStrings.welcomeBack,
-                    style: TextStyle(
-                        fontSize: FontSize.s24,
-                        fontWeight: FontWeightManager.bold,
-                        color: ColorManager.primary2),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double screenWidth = MediaQuery.of(context).size.width;
+        double screenHeight = MediaQuery.of(context).size.height;
+        bool isTablet = screenWidth >= 600;
+        return Column(
+          children: [
+            isTablet ? const SizedBox.shrink() : const BackgroundImage(),
+            Expanded(
+              child: Center(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: SizeConfig.scaleWidth(20), // equivalent to ~5% of 375
+                    vertical: SizeConfig.scaleHeight(14),
                   ),
-                  Text(
-                    AppStrings.loginToAccount,
-                    style: TextStyle(
-                        fontSize: FontSize.s20,
-                        fontWeight: FontWeightManager.semiBold,
-                        color: ColorManager.black),
-                  ),
-                  const SizedBox(height: AppPadding.p28),
-                  loginBuildTextField(
-                    controller: _userIdentifierController,
-                    labelText: AppStrings.emailOrPhone,
-                    hintText: AppStrings.emailOrPhone,
-                    validationStream: _viewModel.outIsIdentifierValid,
-                    keyboardType: TextInputType.text,
-                  ),
-                  const SizedBox(height: AppPadding.p28),
-                  loginBuildTextField(
-                    controller: _userPasswordController,
-                    labelText: AppStrings.password,
-                    hintText: AppStrings.password,
-                    validationStream: _viewModel.outIsPasswordValid,
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
-                  ),
-                  const SizedBox(height: AppPadding.p4),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: AppPadding.p28),
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Text(
-                          AppStrings.forgetPassword,
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ),
+                  child: ConstrainedBox(
+                    constraints:  BoxConstraints(
+                      maxWidth: SizeConfig.scaleWidth(500),
                     ),
-                  ),
-                  const SizedBox(height: AppPadding.p20),
-                  StreamBuilder<bool>(
-                    stream: _viewModel.outAreAllInputsValid,
-                    builder: (context, snapshot) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppPadding.p28),
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: AppSize.s43,
-                          child: ElevatedButton(
-                            onPressed: (snapshot.data ?? false)
-                                ? _viewModel.login
-                                : null,
-                            child: const Text(
-                              AppStrings.login,
-                              style: TextStyle(color: Colors.white),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: screenHeight * 0.01),
+                          Text(
+                            AppStrings.welcomeBack,
+                            style: TextStyle(
+                              fontSize: isTablet ? 28 : 20,
+                              fontWeight: FontWeightManager.bold,
+                              color: ColorManager.primary2,
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-
-// OR Continue With
-                  const SizedBox(height: AppPadding.p20),
-                  Text(
-                    AppStrings.orContinueWith,
-                    style: TextStyle(
-                        fontSize: FontSize.s16,
-                        fontWeight: FontWeightManager.regular,
-                        color: ColorManager.primary),
-                  ),
-
-// Social Media Icons
-                  const SizedBox(height: AppPadding.p20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _buildSocialIcon(ImageAssets.googleLogo),
-                      _buildSocialIcon(ImageAssets.facebookLogo),
-                      _buildSocialIcon(ImageAssets.appleLogo),
-                      _buildSocialIcon(ImageAssets.microsoftLogo),
-                    ],
-                  ),
-
-// New User? Text
-                  const SizedBox(height: AppPadding.p20),
-                  Text(
-                    AppStrings.newUser,
-                    style: TextStyle(
-                        fontSize: FontSize.s16,
-                        fontWeight: FontWeightManager.regular,
-                        color: ColorManager.primary),
-                  ),
-// Register Now Button
-                  SizedBox(
-                    width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: AppPadding.p28),
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, Routes.register);
-                        },
-                        child: Text(
-                          AppStrings.registerNow,
-                          style: TextStyle(
-                            fontSize: FontSize.s20,
-                            fontWeight: FontWeightManager.semiBold,
-                            color: ColorManager.primary2,
+                          Text(
+                            AppStrings.loginToAccount,
+                            style: TextStyle(
+                              fontSize: isTablet ? 22 : 16,
+                              fontWeight: FontWeightManager.semiBold,
+                              color: ColorManager.black,
+                            ),
                           ),
-                        ),
+                          SizedBox(height: screenHeight * 0.04),
+                          loginBuildTextField(
+                            controller: _userIdentifierController,
+                            labelText: AppStrings.emailOrPhone,
+                            hintText: AppStrings.emailOrPhone,
+                            validationStream: _viewModel.outIsIdentifierValid,
+                            keyboardType: TextInputType.text,
+                          ),
+                          SizedBox(height: screenHeight * 0.025),
+                          loginBuildTextField(
+                            controller: _userPasswordController,
+                            labelText: AppStrings.password,
+                            hintText: AppStrings.password,
+                            validationStream: _viewModel.outIsPasswordValid,
+                            keyboardType: TextInputType.visiblePassword,
+                            obscureText: true,
+                          ),
+                          SizedBox(height: screenHeight * 0.01),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              onTap: () {
+                                // TODO: Navigate to forgot password
+                              },
+                              child: Text(
+                                AppStrings.forgetPassword,
+                                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontSize: 12),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.02),
+                          StreamBuilder<bool>(
+                            stream: _viewModel.outAreAllInputsValid,
+                            builder: (context, snapshot) {
+                              return SizedBox(
+                                width: double.infinity,
+                                height: SizeConfig.scaleHeight(60),
+
+                                child: ElevatedButton(
+                                  onPressed: (snapshot.data ?? false)
+                                      ? _viewModel.login
+                                      : null,
+                                  child: const Text(
+                                    AppStrings.login,
+                                    style: TextStyle(color: Colors.white,fontSize: FontSize.s14),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(height: screenHeight * 0.03),
+                          Text(
+                            AppStrings.orContinueWith,
+                            style: TextStyle(
+                              fontSize: isTablet ? 18 : 14,
+                              fontWeight: FontWeightManager.regular,
+                              color: ColorManager.primary,
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.02),
+                          Wrap(
+                            spacing: 10,
+                            alignment: WrapAlignment.center,
+                            children: [
+                              _buildSocialIcon(ImageAssets.googleLogo),
+                              _buildSocialIcon(ImageAssets.facebookLogo),
+                              _buildSocialIcon(ImageAssets.appleLogo),
+                              _buildSocialIcon(ImageAssets.microsoftLogo),
+                            ],
+                          ),
+                          SizedBox(height: screenHeight * 0.03),
+                          Text(
+                            AppStrings.newUser,
+                            style: TextStyle(
+                              fontSize: isTablet ? 18 : 14,
+                              fontWeight: FontWeightManager.regular,
+                              color: ColorManager.primary,
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.01),
+                          SizedBox(
+                            width: double.infinity,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, Routes.register);
+                              },
+                              child: Text(
+                                AppStrings.registerNow,
+                                style: TextStyle(
+                                  fontSize: isTablet ? 22 : 16,
+                                  fontWeight: FontWeightManager.semiBold,
+                                  color: ColorManager.primary2,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
             ),
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 

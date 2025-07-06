@@ -2,6 +2,8 @@ class AppStrings {
   static const String appName = "Sonic";
   static const String noRouteFound = "No Route Found";
   static const String type = "type";
+  static const String error = "error";
+  static const String buses = "buses";
 
 //onBoarding
   static const String onBoardingTitle1 = "Welcome to Sonic!";
@@ -219,6 +221,64 @@ static const String enterAddress = "Enter Address";
 static const String organizationNameHint = "Enter Organization Name";
 
   static const String organizationInformation = " Organization Information";
+  static const String notifications = " Notifications";
+  static const String settings= "Settings";
+  static const String menu= "Menu";
+  
+  static const String searchForAMember = "Serach for a Member";
+
+
+ static const String memberDetails = "Member Details";
+  static const String name = "Name";
+  static const String role = "Role";
+  static const String id = "ID";
+  static const String status = "Status";
+  static const String students = "Students";
+  static const String noStudentsAssigned = "No students assigned.";
+  static const String age = "Age";
+  static const String grade = "Grade";
+  static const String parentContact = "Parent Contact";
+  static const String notAvailable = "N/A";
+  static const String callMember = "Call Member";
+  static const String callSupervisor = "Call Supervisor";
+  static const String callDriver = "Call Driver";
+
+  static const String addStudent = "Add Student";
+  static const String searchForAStudent = "Search for a Student";
+
+  static const String addNewStudent = "Add New Student";
+  static const String showAll = "Show All";
+  static const String searchForService = "Search for a Service";
+  static const String ourServices = "Our Services";
+
+  static const String viewDetails = "View Details";
+
+static const String membersSection = "Members"; 
+  static const String sendNotifications = "Send Notifications"; 
+  static const String studentsSection = "Students"; 
+  static const String driversSection = "Drivers"; 
+  static const String supervisorsSection = "Supervisors"; 
+  static const String busesSection = "Buses"; 
+  static const String blockedZone = "Blocked Zone"; 
+  static const String maintenance = "Maintenance"; 
+  static const String liveTrips = "Live Trips"; 
+  static const String tripsSchedule = "Schedule";
+  static const String tripsHistory = "History";
+  static const String reportsSection = "Reports"; 
+  static const String rolesSection = "Roles"; 
+  static const String permissionsSection = "Permissions"; 
+  static const String organizationSection = "Organization"; 
+  static const String update = "Update"; 
+  static const String driverName = "Driver Name";
+  static const String editDriver = "Edit Driver";
+  static const String imageNotSelected = "Image not selected";
+   static const String editSupervisor = "Edit Supervisor";
+  static const String imageUploadError = "Error picking image.";
+  static const String tripHistory = "Trip History";
+  static const String noTripsFound = "No Trips Found";
+  static const String searchForTrip = "Search For Trip";
+
+
 
 
 }

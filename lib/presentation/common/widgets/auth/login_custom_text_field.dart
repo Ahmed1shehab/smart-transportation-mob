@@ -15,7 +15,7 @@ Widget loginBuildTextField({
   return StatefulBuilder(
     builder: (context, setState) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p28),
+        padding: const EdgeInsets.symmetric(horizontal: AppPadding.p18),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -26,7 +26,7 @@ Widget loginBuildTextField({
                 color: ColorManager.black, // Using ColorManager
               ),
             ),
-            const SizedBox(height: AppSize.s8), // Using AppSize
+            const SizedBox(height: AppSize.s4), // Using AppSize
             StreamBuilder<bool>(
               stream: validationStream,
               builder: (context, snapshot) {

@@ -7,12 +7,11 @@ import 'package:smart_transportation/data/network/requests.dart';
 void main() async {
   // Ensure Flutter binding is initialized
   WidgetsFlutterBinding.ensureInitialized();
-
   // Initialize dependencies
   await initAppModule();
-
   // Run the app
   runApp(MyApp());
 }
+
 
 

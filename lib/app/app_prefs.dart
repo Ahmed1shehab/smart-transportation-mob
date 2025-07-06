@@ -47,9 +47,6 @@ class AppPreferences {
   Future<void> setOnBoardingScreenViewed() async {
     _sharedPreferences.setBool(prefKeyOnBoardingScreenViewed, true);
   }
-
-
-
 //
   Future<bool> isOnBoardingScreenViewed() async {
     return _sharedPreferences.getBool(prefKeyOnBoardingScreenViewed) ?? false;

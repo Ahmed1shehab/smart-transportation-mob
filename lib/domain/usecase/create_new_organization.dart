@@ -14,7 +14,6 @@ class CreateNewOrganizerUsecase implements BaseUseCase<CreateNewOrganizerInput, 
   @override
   Future<Either<Failure, Organizer>> execute(CreateNewOrganizerInput input) async {
     try {
-      // Create the request object from input
       final request = CreateNewOrganizationRequest(
         name: input.name,
         type: input.type,
@@ -24,7 +23,6 @@ class CreateNewOrganizerUsecase implements BaseUseCase<CreateNewOrganizerInput, 
         addressId: input.addressId,
       );
 
-      // Let repository handle the request
       return await _repository.createNewOrganization(request);
     } catch (e) {
       return Left(Failure(
@@ -40,9 +38,8 @@ class CreateNewOrganizerInput {
   final String type;
   final String phoneNumber;
   final String description;
-  final File imageFile; // Changed from MultipartFile to File
+  final File imageFile; 
   final String addressId;
-
   CreateNewOrganizerInput({
     required this.name,
     required this.type,
@@ -50,6 +47,5 @@ class CreateNewOrganizerInput {
     required this.description,
     required this.imageFile,
     required this.addressId,
-
   });
 }

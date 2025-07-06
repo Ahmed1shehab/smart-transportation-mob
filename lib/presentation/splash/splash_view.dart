@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:smart_transportation/app/app_prefs.dart';
 import 'package:smart_transportation/app/di.dart';
+import 'package:smart_transportation/presentation/resources/asset_manager.dart';
 
 import '../resources/color_manager.dart';
 import '../resources/constants_manager.dart';
@@ -55,9 +56,16 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorManager.primary,
+      backgroundColor: ColorManager.splash,
+      body: Center(
+        child: Image.asset(
+          ImageAssets.splashLogo,
+          fit: BoxFit.contain,
+        ),
+      ),
     );
   }
+
 
   @override
   void dispose() {

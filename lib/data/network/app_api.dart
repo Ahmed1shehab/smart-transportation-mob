@@ -9,7 +9,6 @@ part 'app_api.g.dart'; // Generated file
 @RestApi(baseUrl: Constants.baseUrl)
 abstract class AppServiceClient {
   factory AppServiceClient(Dio dio, {String baseUrl}) = _AppServiceClient;
-
   //Login
   @POST("/api/auth/signin")
   Future<AuthenticationSignInResponse> login(
@@ -20,7 +19,6 @@ abstract class AppServiceClient {
   @POST("/api/auth/signup")
   @MultiPart()
   Future<AuthenticationSignUpResponse> register(@Body() FormData formData);
-
   //create organizer onboard
   @POST('/api/organizer/onboard')
   @MultiPart()
@@ -36,7 +34,6 @@ abstract class AppServiceClient {
   Future<GetOneOrganizationResponse> getOrganizationData(
       @Path("id") String id,
       );
-
   //
   @POST("/api/organizer/driver")
   @MultiPart()

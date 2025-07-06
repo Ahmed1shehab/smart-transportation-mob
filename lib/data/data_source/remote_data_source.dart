@@ -50,7 +50,6 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     return await _appServiceClient.createNewDriver(formData);
   }
   
-
 }
 
 abstract class RemoteDataSource {
