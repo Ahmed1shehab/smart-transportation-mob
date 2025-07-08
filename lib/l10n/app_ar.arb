@@ -1,0 +1,10 @@
+{
+  "@@locale": "ar",
+  "welcomeMaryam": "مرحبًا مريم!",
+  "welcomeSubtitle": "يرجى إدخال البيانات التالية لاستكمال الحساب",
+  "start": "ابدأ",
+  "switchAccountType": "تبديل نوع الحساب",
+  "joinServiceProvider": "انضم لمقدم الخدمة",
+  "addStudentDetails": "أضف بيانات الطالب",
+  "addAddress": "أضف العنوان"
+}

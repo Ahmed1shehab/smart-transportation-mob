@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "welcomeMaryam": "Welcome Maryam!",
+  "welcomeSubtitle": "Please provide the following details to complete your member account",
+  "start": "Start",
+  "switchAccountType": "Switch Account Type",
+  "joinServiceProvider": "Join Service Provider",
+  "addStudentDetails": "Add Student’s Details",
+  "addAddress": "Add Address"
+}
